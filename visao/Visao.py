@@ -13,3 +13,4 @@ class Visao:
 
     def deletar(self):
         pass
+
