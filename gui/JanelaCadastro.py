@@ -6,9 +6,9 @@ from gui.JanelaPadrao import JanelaPadrao
 class JanelaCadastro(JanelaPadrao):
     def __init__(self, master):
         super().__init__(master)
-        self.configurarJanelaCadastro()
+        self.configurarJanelaLogin()
 
-    def configurarJanelaCadastro(self):
+    def configurarJanelaLogin(self):
         self.master.attributes("-alpha", 0.9)
         #criando os quadrados da esquerda e direita
         letFrame = Frame(self.master, width=400, height=620, bg="#8B0000", relief="raise")
@@ -39,22 +39,6 @@ class JanelaCadastro(JanelaPadrao):
         loginButton = ttk.Button(rightFrame, text="Entrar", width=30)
         loginButton.place(x=200, y=400)
 
-        def register():
-            loginButton.place(x=2000)
-            passLabel.place(x=2000)
-            userLabel.place(x=2000)
-            userEntry.place(x=2000)
-            passEntry.place(x=2000)
-            registerButton.place(x=2000)
-
-            nomeLabel = Label(rightFrame, text="Nome: ", bg="#8B0000", font=("Arial", 12, "bold"), fg="White")
-            nomeLabel.place(x=50, y=100)
-            idadeLabel = Label(rightFrame, text="Idade: ", bg="#8B0000", font=("Arial", 12, "bold"), fg="White")
-            idadeLabel.place(x=50, y=130)
-            cpfLabel = Label(rightFrame, text="CPF: ", bg="#8B0000", font=("Arial", 12, "bold"), fg="White")
-            cpfLabel.place(x=50, y=160)
-
-
         # criando os botoes
-        registerButton = ttk.Button(rightFrame, text="Registrar", width=30, command=register)
+        registerButton = ttk.Button(rightFrame, text="Registrar", width=30)
         registerButton.place(x=200, y=440)
