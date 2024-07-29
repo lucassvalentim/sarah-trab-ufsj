@@ -1,16 +1,13 @@
-from tkinter import *
-from tkinter import messagebox
-
 
 class JanelaPadrao:
     def __init__(self, master=None):
         self.master = master
-        self.configurarJanela()
-
-    def configurarJanela(self):
-        self.master.title("SARAH - Sistema de Apoio e Recursos "
-                          "em Assistência a Saúde e Hospitalar.")
-
-        self.master.geometry("1080x620")
-        self.master.configure(background="white")
-        self.master.resizable(width=False, height=False)
+        # INICIALIZA AS CARACTERÍSITCAS DA TELA DO PROGRAMA
+        # TODO: arrumar a foto nas janelas (ñ ta aparecendo a flor) :(
+        self.master.geometry('960x540')
+        self.master.resizable(0, 0)
+        self.selectionbar_color = '#eff5f6'
+        self.sidebar_color = '#CFCFCF'
+        self.img_color = '#FCFCFC'
+        self.fonte = ('Arial', 14)
+        self.fonte_menor = ('Arial', 10)
