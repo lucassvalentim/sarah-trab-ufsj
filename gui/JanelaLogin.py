@@ -15,7 +15,6 @@ class JanelaLogin(JanelaPadrao):
         # SETANDO O TIPO PARA PACIENTE
         self.tipo = 2
 
-
         self.configurarJanelaLogin()
 
     def configurarJanelaLogin(self):
@@ -32,7 +31,7 @@ class JanelaLogin(JanelaPadrao):
         label.place(relx=0.5, rely=0.6, anchor=tkinter.CENTER)
 
         # LABEL USUÁRIO
-        label_nome = tkinter.Label(label, text='Usuário', font=self.fonte, padx=5, pady=5)
+        label_nome = tkinter.Label(label, text='CPF', font=self.fonte, padx=5, pady=5)
         label_nome.pack()
         entry_nome = tkinter.Entry(label, font=self.fonte_menor)
         entry_nome.pack()

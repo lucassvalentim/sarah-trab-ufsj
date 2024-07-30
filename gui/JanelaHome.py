@@ -1,10 +1,11 @@
 import tkinter
 from tkinter import *
-from tkinter import ttk
 from PIL import ImageTk, Image
 from gui.JanelaPadrao import JanelaPadrao
 from gui.JanelaContainer import JanelaContainer
 from gui.JanelaConsultas import JanelaConsultas
+
+
 class JanelaHome(JanelaPadrao):
     def __init__(self, master, tipo):
         super().__init__(master)
@@ -38,7 +39,6 @@ class JanelaHome(JanelaPadrao):
 
         # if self.var == 0:
         JanelaContainer(self.master, self.var, self.tipo)
-
 
         # IMAGEM USUÁRIO
         img_user = tkinter.PhotoImage(file='/home/izzy/sarah-trab-ufsj/assets/flor.png')
@@ -78,9 +78,8 @@ class JanelaHome(JanelaPadrao):
 
     # FUNÇÃO CHAMA A JANELA DE CONSULTAS
     def botaoconsultaspressionado(self):
-        JanelaConsultas(self.master)
+        JanelaConsultas(self.master, self.tipo)
 
     # FUNÇÃO FECHA O APP CASO CLIQUE EM SAIR
     def FecharApp(self):
         self.master.quit()
-
