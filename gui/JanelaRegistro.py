@@ -3,18 +3,24 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from gui.JanelaHome import JanelaHome
+# from gui.JanelaLogin import JanelaLogin
 from gui.JanelaPadrao import JanelaPadrao
 from gui.JanelaErro import JanelaErro
+from visao.VisaoProfissional import VisaoProfissionalSaude
+
 
 class JanelaRegistro(JanelaPadrao):
-    def __init__(self, master, tipo):
+    def __init__(self, master, visao: VisaoProfissionalSaude):
         super().__init__(master)
         self.master = master
+
+        self.visao = visao
+
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Cadastro")
 
         self.var = StringVar()
-        self.tipo = tipo
+        self.tipo = 0
         self.holder_list = []
 
         self.configurarJanelaRegistro()
@@ -171,10 +177,10 @@ class JanelaRegistro(JanelaPadrao):
         self.entry_localidade = tkinter.Entry(label, font=self.fonte_menor)
         self.entry_localidade.place(x=120, y=180)
 
-        label_senha = tkinter.Label(label, text='Senha:', font=self.fonte)
-        label_senha.place(x=20, y=220)
-        self.entry_senha = tkinter.Entry(label, show='*', font=self.fonte_menor)
-        self.entry_senha.place(x=120, y=220)
+        # label_senha = tkinter.Label(label, text='Senha:', font=self.fonte)
+        # label_senha.place(x=20, y=220)
+        # self.entry_senha = tkinter.Entry(label, show='*', font=self.fonte_menor)
+        # self.entry_senha.place(x=120, y=220)
 
         label_especialiacao = tkinter.Label(label, text='Especialização:', font=self.fonte)
         label_especialiacao.place(x=300, y=20)
@@ -206,34 +212,68 @@ class JanelaRegistro(JanelaPadrao):
         self.entry_preco_consulta = tkinter.Entry(label, font=self.fonte_menor)
         self.entry_preco_consulta.place(x=450, y=220)
 
+        label_preco_convenios = tkinter.Label(label, text='Convenios:', font=self.fonte)
+        # label_preco_consulta.place(x=300, y=220)
+        self.entry_convenios = tkinter.Entry(label, font=self.fonte_menor)
+        # self.entry_convenios.place(x=450, y=220)
+
         botao_registrar = tkinter.Button(self.master, text='Registrar', font=self.fonte_menor, command=self.Registrar)
         botao_registrar.place(relx=0.90, rely=0.95, anchor=CENTER, width=100, height=30)
 
     def Registrar(self):
 
-        # ARMAZENANDO OS VALORES INSERIDOS PRA VER SE TAVA DANDO CERTO (ESTÁ) :D
-        nome = self.entry_nome.get()
-        idade = self.entry_idade.get()
-        sexo = self.sexo_combobox.get()
-        cpf = self.entry_cpf.get()
-        localidade = self.entry_localidade.get()
-        senha = self.entry_senha.get()
+        if self.tipo == 1:
+            # ARMAZENANDO OS VALORES INSERIDOS PRA VER SE TAVA DANDO CERTO (ESTÁ) :D
+            nome = self.entry_nome.get()
+            idade = self.entry_idade.get()
+            sexo = self.sexo_combobox.get()
+            cpf = self.entry_cpf.get()
+            localidade = self.entry_localidade.get()
+            senha = self.entry_senha.get()
 
-        # VERIFICAR SE AS INFORMAÇÕES SÃO VÁLIDAS, CASO NÃO CHAMA A JANELA SECUNDÁRIA
-        if not nome or not idade or not sexo or not cpf or not localidade or not senha:
-            button_open = tkinter.Button(
-                self.master,
-                text="Informações invalidas",
-                command=self.JanelaSecundaria()
-            )
-        else:
-            print("Nome:", nome)
-            print("Idade:", idade)
-            print("Sexo:", sexo)
-            print("CPF:", cpf)
-            print("Localidade:", localidade)
-            print("Senha:", senha)
-            self.configurarJanelaHome()
+            # VERIFICAR SE AS INFORMAÇÕES SÃO VÁLIDAS, CASO NÃO CHAMA A JANELA SECUNDÁRIA
+            if not nome or not idade or not sexo or not cpf or not localidade or not senha:
+                button_open = tkinter.Button(
+                    self.master,
+                    text="Informações invalidas",
+                    command=self.JanelaSecundaria()
+                )
+            else:
+                print("Nome:", nome)
+                print("Idade:", idade)
+                print("Sexo:", sexo)
+                print("CPF:", cpf)
+                print("Localidade:", localidade)
+                print("Senha:", senha)
+                self.configurarJanelaHome()
+
+        elif self.tipo == 2:
+            # ARMAZENANDO OS VALORES INSERIDOS PRA VER SE TAVA DANDO CERTO (ESTÁ) :D
+            nome = self.entry_nome.get()
+            idade = self.entry_idade.get()
+            cpf = self.entry_cpf.get()
+            sexo = self.sexo_combobox.get()
+            localidade = self.entry_localidade.get()
+            especializacao = self.entry_especializacao.get()
+            crm = self.entry_crm.get()
+            formacao = self.entry_formacao.get()
+            tempoatividade = self.entry_localidade.get()
+            convenios = self.entry_convenios.get()
+            valorconsulta = self.entry_preco_consulta.get()
+            # senha = self.entry_senha.get()
+
+            # VERIFICAR SE AS INFORMAÇÕES SÃO VÁLIDAS, CASO NÃO CHAMA A JANELA SECUNDÁRIA
+            if not nome or not idade or not sexo or not cpf or not localidade:
+                button_open = tkinter.Button(
+                    self.master,
+                    text="Informações invalidas",
+                    command=self.JanelaSecundaria()
+                )
+            else:
+                self.visao.inserir(nome, idade, cpf, sexo, localidade, especializacao,
+                                   crm, formacao, tempoatividade, convenios, valorconsulta)
+                self.configurarJanelaHome()
+                # self.configurarJanelaLogin()
 
     # FUNÇÃO QUE CONFIGURA JANELA SECUNDÁRIA CASO AS INFORMAÇÕES SEJAM INVÁLIDAS
     def JanelaSecundaria(self):
@@ -244,3 +284,8 @@ class JanelaRegistro(JanelaPadrao):
         for widget in self.master.winfo_children():
             widget.destroy()
         JanelaHome(self.master, self.tipo)
+
+    # def configurarJanelaLogin(self):
+    #     for widget in self.master.winfo_children():
+    #         widget.destroy()
+    #     JanelaLogin(self.master, self.visao, self.tipo)
