@@ -22,7 +22,7 @@ class JanelaRegistro(JanelaPadrao):
     def configurarJanelaRegistro(self):
 
         # IMAGEM DE FUNDO DA TELA
-        bg_panel = Image.open('/home/izzy/sarah-trab-ufsj/assets/sarah_registro.png')
+        bg_panel = Image.open('assets/sarah_registro.png')
         bg_panel_photo = ImageTk.PhotoImage(bg_panel)
         bg_panel = Label(self.master, image=bg_panel_photo)
         bg_panel.image = bg_panel_photo

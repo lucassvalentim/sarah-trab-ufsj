@@ -24,7 +24,7 @@ class JanelaHome(JanelaPadrao):
 
     def configurarJanelaHome(self):
         # IMAGEM DE FUNDO
-        bg_panel = Image.open('/home/izzy/sarah-trab-ufsj/assets/tela_inicial_um.png')
+        bg_panel = Image.open('assets/tela_inicial_um.png')
         bg_panel_photo = ImageTk.PhotoImage(bg_panel)
         bg_panel = Label(self.master, image=bg_panel_photo)
         bg_panel.image = bg_panel_photo
@@ -41,7 +41,7 @@ class JanelaHome(JanelaPadrao):
         JanelaContainer(self.master, self.var, self.tipo)
 
         # IMAGEM USUÁRIO
-        img_user = tkinter.PhotoImage(file='/home/izzy/sarah-trab-ufsj/assets/flor.png')
+        img_user = tkinter.PhotoImage(file='assets/flor.png')
         self.master.iconphoto(True, img_user)
 
         # SIDEBAR

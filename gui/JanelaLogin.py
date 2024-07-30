@@ -20,7 +20,7 @@ class JanelaLogin(JanelaPadrao):
     def configurarJanelaLogin(self):
 
         # CONFIGURA A APARENCIA DA TELA
-        bg_panel = Image.open('/home/izzy/sarah-trab-ufsj/assets/sarah_login_um.png')
+        bg_panel = Image.open('assets/sarah_login_um.png')
         bg_panel_photo = ImageTk.PhotoImage(bg_panel)
         bg_panel = Label(self.master, image=bg_panel_photo)
         bg_panel.image = bg_panel_photo

@@ -29,7 +29,7 @@ class JanelaContainer(JanelaPadrao):
     # FUNÇÃO RESPONSÁVEL POR MOSTRAR AS INFORMAÇÕES DO MÉDICO PARA O PACIENTE
     def telamedico(self):
         # IMAGEM CLIENTE
-        img_user = tkinter.PhotoImage(file='/home/izzy/sarah-trab-ufsj/assets/flor.png')
+        img_user = tkinter.PhotoImage(file='assets/flor.png')
         self.master.iconphoto(True, img_user)
 
         nome_user = img_user.subsample(1)
