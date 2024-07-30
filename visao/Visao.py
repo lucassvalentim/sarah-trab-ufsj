@@ -1,7 +1,10 @@
+from gui.JanelaLogin import JanelaLogin
+from gui.JanelaPadrao import JanelaPadrao
+
+
 class Visao:
     def home(self):
         pass
-
     def mudarTela(self):
         pass
 
@@ -13,4 +16,3 @@ class Visao:
 
     def deletar(self):
         pass
-
