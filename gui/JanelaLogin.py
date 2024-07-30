@@ -4,16 +4,20 @@ from PIL import ImageTk, Image
 from gui.JanelaRegistro import JanelaRegistro
 from gui.JanelaPadrao import JanelaPadrao
 from gui.JanelaHome import JanelaHome
+from visao.VisaoProfissional import VisaoProfissionalSaude
 
 class JanelaLogin(JanelaPadrao):
-    def __init__(self, master):
+    def __init__(self, master, visao:VisaoProfissionalSaude, tipo):
         super().__init__(master)
         self.master = master
+
+        self.visao = visao
+
         # TODO: deixar bonitinho o titulo da pagina (colocar logo)
         self.master.title("Login")
 
         # SETANDO O TIPO PARA PACIENTE
-        self.tipo = 2
+        self.tipo = tipo
 
         self.configurarJanelaLogin()
 
@@ -61,7 +65,7 @@ class JanelaLogin(JanelaPadrao):
     def configurarJanelaRegistro(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaRegistro(self.master, self.tipo)
+        JanelaRegistro(self.master, self.visao)
 
     # FUNÇÃO RESPONSÁVEL POR CHAMAR A TELA HOME
     def configurarJanelaHome(self):

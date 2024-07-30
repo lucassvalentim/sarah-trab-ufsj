@@ -1,21 +1,40 @@
-from visao.Visao import Visao
+from modelo.ProfissionalSaude import ProfissionalSaude
+from controle.ControleProfissionalSaude import ControleProfissionalSaude
 
 
-class VisaoProfissionalSaude(Visao):
-    def solicitarLogin(self):
-        pass
+class VisaoProfissionalSaude:
+    def __init__(self, controle:ControleProfissionalSaude):
+        self.controle = controle
 
-    def personalizarPerfil(self):
-        pass
+    def inserir(
+            self,
+            nome,
+            idade,
+            cpf,
+            sexo,
+            localidade,
+            especializacao,
+            crm,
+            formacao,
+            tempoAtividade,
+            convenios,
+            precoConsulta):
 
-    def home(self):
-        pass
+        profissional = ProfissionalSaude(
+            0,
+            nome,
+            idade,
+            cpf,
+            sexo,
+            localidade,
+            especializacao,
+            crm,
+            formacao,
+            tempoAtividade,
+            convenios,
+            precoConsulta)
 
-    def mudarTela(self):
-        pass
-
-    def inserir(self):
-        pass
+        self.controle.inserir(profissional)
 
     def vizualizar(self):
         pass

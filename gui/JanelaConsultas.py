@@ -85,49 +85,45 @@ class JanelaConsultas(JanelaPadrao):
         consultas_agendadas_quatro.place(relx=0.0, rely=0.6, relwidth=1, relheight=0.15)
 
         # INFORMAÇÕES DENTRO DO SUBFRAME UM
-        label_nome_um = tkinter.Label(consultas_agendadas_um, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
+        label_nome_um = tkinter.Label(consultas_agendadas_um, text="Nome do Paciente: " + 'Rodolfo' + '\t\t\t\t' +
                                                                  'Horário: ' + '14:30', foreground="black",
                                       bg=self.selectionbar_color, font=self.fonte_menor)
         label_nome_um.place(x=5, y=5)
 
-        label_especialidade_um = tkinter.Label(consultas_agendadas_um, text="Especialização: " + 'Ginecologista'
-                                                                          + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
+        label_especialidade_um = tkinter.Label(consultas_agendadas_um, text="Sintomas: " + 'Dor de cabeça.',
                                                foreground="black",
                                                bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_um.place(x=5, y=30)
 
         # INFORMAÇÕES DENTRO DO SUBFRAME DOIS
-        label_nome_dois = tkinter.Label(consultas_agendadas_dois, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
+        label_nome_dois = tkinter.Label(consultas_agendadas_dois, text="Nome do paciente: " + 'Rodolfo' + '\t\t\t\t' +
                                                                      'Horário: ' + '14:30', foreground="black",
                                         bg=self.selectionbar_color, font=self.fonte_menor)
         label_nome_dois.place(x=5, y=5)
 
-        label_especialidade_dois = tkinter.Label(consultas_agendadas_dois, text="Especialização: " + 'Ginecologista'
-                                                                              + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
+        label_especialidade_dois = tkinter.Label(consultas_agendadas_dois, text="Sintomas: " + 'Dor de cabeça.',
                                                  foreground="black",
                                                  bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_dois.place(x=5, y=30)
 
         # INFORMAÇÕES DENTRO DO SUBFRAME TRES
-        label_nome_tres = tkinter.Label(consultas_agendadas_tres, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
+        label_nome_tres = tkinter.Label(consultas_agendadas_tres, text="Nome do paciente: " + 'Rodolfo' + '\t\t\t\t' +
                                                                        'Horário: ' + '14:30', foreground="black",
                                         bg=self.selectionbar_color, font=self.fonte_menor)
         label_nome_tres.place(x=5, y=5)
 
-        label_especialidade_tres = tkinter.Label(consultas_agendadas_tres, text="Especialização: " + 'Ginecologista'
-                                                                                + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
+        label_especialidade_tres = tkinter.Label(consultas_agendadas_tres, text="Sintomas: " + 'Dor de cabeça.',
                                                  foreground="black",
                                                  bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_tres.place(x=5, y=30)
 
         # INFORMAÇÕES DENTRO DO SUBFRAME QUATRO
-        label_nome_tres = tkinter.Label(consultas_agendadas_quatro, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
+        label_nome_tres = tkinter.Label(consultas_agendadas_quatro, text="Nome do paciente: " + 'Rodolfo' + '\t\t\t\t' +
                                                                        'Horário: ' + '14:30', foreground="black",
                                         bg=self.selectionbar_color, font=self.fonte_menor)
         label_nome_tres.place(x=5, y=5)
 
-        label_especialidade_tres = tkinter.Label(consultas_agendadas_quatro, text="Especialização: " + 'Ginecologista'
-                                                                                + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
+        label_especialidade_tres = tkinter.Label(consultas_agendadas_quatro, text="Sintomas: " + 'Dor de cabeça.',
                                                  foreground="black",
                                                  bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_tres.place(x=5, y=30)
