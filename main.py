@@ -1,4 +1,4 @@
-from gui.JanelaLogin import JanelaLogin
+from visao.VisaoLogin import JanelaLogin
 from tkinter import *
 from visao.VisaoProfissional import VisaoProfissionalSaude
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
