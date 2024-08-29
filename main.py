@@ -9,8 +9,8 @@ master = Tk()
 pps = PersistenciaProfissionalSaude('profissionais.db')
 cps = ControleProfissionalSaude(pps)
 vps = VisaoProfissionalSaude(cps)
-
 jan = JanelaLogin(master, vps, 0)
+
 master.mainloop()
 for i in pps.carregar_profissionais():
     print(i)
