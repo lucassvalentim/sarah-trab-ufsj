@@ -1,12 +1,10 @@
 import tkinter
-from gui.JanelaPadrao import JanelaPadrao
+from visao.JanelaPadrao import JanelaPadrao
 
 
 class JanelaConsultas(JanelaPadrao):
-    def __init__(self, master, tipo):
+    def __init__(self, master):
         super().__init__(master)
-
-        self.tipo = tipo
 
         # INICIALIZANDO OS ATRIBUTOS DA TELA
         self.secondary_window = tkinter.Toplevel()
@@ -36,10 +34,10 @@ class JanelaConsultas(JanelaPadrao):
         self.configurarjanelacurtir()
 
     def configurarjanelacurtir(self):
-        if self.tipo == 1:
-            self.telapaciente()
-        elif self.tipo == 2:
-            self.telamedico()
+        # if self.tipo == 1:
+        #     self.telapaciente()
+        # elif self.tipo == 2:
+        self.telamedico()
 
     def telamedico(self):
         self.consultasagendasmedicos()

@@ -1,20 +1,19 @@
 import tkinter
 from tkinter import *
 from PIL import ImageTk, Image
-from gui.JanelaPadrao import JanelaPadrao
-from gui.JanelaContainer import JanelaContainer
-from gui.JanelaConsultas import JanelaConsultas
+
+from visao.JanelaConsultasMedico import JanelaConsultasMedico
+from visao.JanelaContainerMedico import JanelaContainerMedico
+from visao.JanelaPadrao import JanelaPadrao
+from visao.JanelaConsultas import JanelaConsultas
 
 
 class JanelaHome(JanelaPadrao):
-    def __init__(self, master, tipo):
+    def __init__(self, master):
         super().__init__(master)
         self.master = master
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Sarah")
-
-        # RECEBE O TIPO (PACIENTE OU MÉDICO)
-        self.tipo = tipo
 
         # ESSA VÁRIVEL EU CRIEI PRA IMPLEMENTAR A LÓGICA DE CHAMAR A JANELACONTAINER
         # MAS ESTÁ FUNCIONANDO SÓ CHAMANDO ELA DENTRO DE CONFIGURARJANELAHOME (Ñ SEI PQ)
@@ -38,7 +37,7 @@ class JanelaHome(JanelaPadrao):
         img_color = '#FCFCFC'
 
         # if self.var == 0:
-        JanelaContainer(self.master, self.var, self.tipo)
+        JanelaContainerMedico(self.master)
 
         # IMAGEM USUÁRIO
         img_user = tkinter.PhotoImage(file='assets/flor.png')
@@ -68,17 +67,13 @@ class JanelaHome(JanelaPadrao):
                                          font=self.fonte_menor, command=self.botaoconsultaspressionado)
         botao_consultas.place(relx=0.3, rely=0.2, anchor=CENTER, width=100, height=30)
 
-        botao_mensagens = tkinter.Button(submenu_frame, text='Mensagens', bg=selectionbar_color,
-                                         font=self.fonte_menor)
-        botao_mensagens.place(relx=0.3, rely=0.3, anchor=CENTER, width=100, height=30)
-
         botao_mensagens = tkinter.Button(submenu_frame, text='Sair', bg=selectionbar_color,
                                          font=self.fonte_menor, command=self.FecharApp)
-        botao_mensagens.place(relx=0.3, rely=0.9, anchor=CENTER, width=100, height=30)
+        botao_mensagens.place(relx=0.3, rely=0.3, anchor=CENTER, width=100, height=30)
 
     # FUNÇÃO CHAMA A JANELA DE CONSULTAS
     def botaoconsultaspressionado(self):
-        JanelaConsultas(self.master, self.tipo)
+        JanelaConsultasMedico(self.master)
 
     # FUNÇÃO FECHA O APP CASO CLIQUE EM SAIR
     def FecharApp(self):

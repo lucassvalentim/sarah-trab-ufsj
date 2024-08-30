@@ -2,7 +2,7 @@ from modelo.ProfissionalSaude import ProfissionalSaude
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 
 
-class VisaoProfissionalSaude:
+class Visaoprofissional:
     def __init__(self, controle:ControleProfissionalSaude):
         self.controle = controle
 

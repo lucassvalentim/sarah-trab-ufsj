@@ -1,23 +1,35 @@
 import tkinter
+from sqlite3 import connect
 from tkinter import *
 from PIL import ImageTk, Image
-from gui.JanelaRegistro import JanelaRegistro
-from gui.JanelaPadrao import JanelaPadrao
-from gui.JanelaHome import JanelaHome
-from visao.VisaoProfissional import VisaoProfissionalSaude
+from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from visao.JanelaRegistro import JanelaRegistro
+from visao.JanelaPadrao import JanelaPadrao
+from visao.JanelaHome import JanelaHome
+from visao.visaopaciente import Visaopaciente
+from visao.visaoprofissional import Visaoprofissional
+from controle.ControlePaciente import ControlePaciente
+from controle.ControleProfissionalSaude import ControleProfissionalSaude
+from persistencia.PersistenciaPaciente import PersistenciaPaciente
+
 
 class JanelaLogin(JanelaPadrao):
-    def __init__(self, master, visao:VisaoProfissionalSaude, tipo):
+    def __init__(self, master, visaopaciente: Visaopaciente, visaomedico: Visaoprofissional,
+                 controlepaciente: ControlePaciente,
+                 persistenciapaciente: PersistenciaPaciente, controlemedico: ControleProfissionalSaude,
+                 persitenciamedico: PersistenciaProfissionalSaude):
+
         super().__init__(master)
         self.master = master
-
-        self.visao = visao
+        self.visaopaciente = visaopaciente
+        self.visaomedico = visaomedico
+        self.controlepaciente = controlepaciente
+        self.persistenciapaciente = persistenciapaciente
+        self.controlemedico = controlemedico
+        self.persistenciamedico = persitenciamedico
 
         # TODO: deixar bonitinho o titulo da pagina (colocar logo)
         self.master.title("Login")
-
-        # SETANDO O TIPO PARA PACIENTE
-        self.tipo = tipo
 
         self.configurarJanelaLogin()
 
@@ -52,23 +64,26 @@ class JanelaLogin(JanelaPadrao):
 
         # BOTÃO REGISTRAR
         botao_registrar = tkinter.Button(frame_botoes, text='Registrar',
-                                    font=self.fonte_menor, command=self.configurarJanelaRegistro)
+                                         font=self.fonte_menor, command=self.configurarJanelaRegistro)
         botao_registrar.grid(row=0, column=0, padx=15, ipadx=2, ipady=2)
 
         # BOTÃO LOGIN
         botao_login = tkinter.Button(frame_botoes, text='Login',
-                                         font=self.fonte_menor, command=self.configurarJanelaHome)
+                                     font=self.fonte_menor, command=self.configurarJanelaHome)
         botao_login.grid(row=0, column=1, padx=15, ipadx=2, ipady=2)
 
-
-    # FUNÇÃO RESPONŚAVEL POR CHAMAR A TELA REGISTRO
     def configurarJanelaRegistro(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaRegistro(self.master, self.visao)
+        JanelaRegistro(self.master, self.visaopaciente, self.visaomedico,
+                       self.controlepaciente,
+                       self.persistenciapaciente, self.controlemedico,
+                       self.persistenciamedico)
+
+    #TODO: INVERTI A TELA DE MEDICO E PACIENTE NA PARTE DE MOSTRAR OS CARDS, ARRUMAR
 
     # FUNÇÃO RESPONSÁVEL POR CHAMAR A TELA HOME
     def configurarJanelaHome(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaHome(self.master, self.tipo)
+        JanelaHome(self.master)
