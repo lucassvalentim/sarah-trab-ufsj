@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import ttk
-from gui.JanelaPadrao import JanelaPadrao
+from visao.JanelaPadrao import JanelaPadrao
 
 # ESSA CLASSE SERVE PARA CRIAR A JANELA DE ERRO
 class JanelaErro(JanelaPadrao):

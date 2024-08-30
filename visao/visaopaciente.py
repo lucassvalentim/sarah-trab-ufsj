@@ -1,0 +1,32 @@
+from modelo.Paciente import Paciente
+from controle.ControlePaciente import ControlePaciente
+
+
+class Visaopaciente:
+    def __init__(self, controle:ControlePaciente):
+        self.controle = controle
+
+    def inserir(
+            self,
+            nome,
+            idade,
+            cpf,
+            sexo,
+            localidade):
+
+        paciente = Paciente(
+            0,
+            nome,
+            idade,
+            cpf,
+            sexo,
+            localidade,
+            )
+
+        self.controle.inserir(paciente)
+
+    def vizualizar(self):
+        pass
+
+    def deletar(self):
+        pass
