@@ -12,7 +12,9 @@ class Visaopaciente:
             idade,
             cpf,
             sexo,
-            localidade):
+            localidade,
+            senha,
+            sintomas):
 
         paciente = Paciente(
             0,
@@ -21,6 +23,8 @@ class Visaopaciente:
             cpf,
             sexo,
             localidade,
+            senha,
+            sintomas
             )
 
         self.controle.inserir(paciente)
@@ -28,5 +32,5 @@ class Visaopaciente:
     def vizualizar(self):
         pass
 
-    def deletar(self):
-        pass
+    def deletar(self, id):
+        self.controle.remover(id)

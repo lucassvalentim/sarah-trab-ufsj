@@ -20,6 +20,7 @@ class JanelaRegistro(JanelaPadrao):
 
         super().__init__(master)
         self.master = master
+        self.cpf_valor = None
         self.visaopaciente = visaopaciente
         self.visaomedico = visaomedico
         self.controlepaciente = controlepaciente
@@ -95,9 +96,10 @@ class JanelaRegistro(JanelaPadrao):
     def camposPaciente(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaRegistroPaciente(self.master, self.persistenciapaciente, self.controlepaciente, self.visaopaciente)
+        JanelaRegistroPaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente, self.visaopaciente,
+                               self.visaomedico, self.persistenciamedico, self.controlemedico)
 
     def camposProfissional(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaRegistroMedico(self.master, self.persistenciamedico, self.controlemedico, self.visaomedico)
+        JanelaRegistroMedico(self.master, self.cpf_valor, self.persistenciamedico, self.controlemedico, self.visaomedico)

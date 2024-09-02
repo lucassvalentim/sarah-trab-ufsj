@@ -13,6 +13,7 @@ class Visaoprofissional:
             cpf,
             sexo,
             localidade,
+            senha,
             especializacao,
             crm,
             formacao,
@@ -27,6 +28,7 @@ class Visaoprofissional:
             cpf,
             sexo,
             localidade,
+            senha,
             especializacao,
             crm,
             formacao,
@@ -39,5 +41,6 @@ class Visaoprofissional:
     def vizualizar(self):
         pass
 
-    def deletar(self):
-        pass
+    def deletar(self, id):
+        self.controle.remover(id)
+

@@ -10,10 +10,13 @@ from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
 
+
 class JanelaRegistroMedico(JanelaPadrao):
-    def __init__(self, master, persistencia:PersistenciaProfissionalSaude, controle:ControleProfissionalSaude, visao:Visaoprofissional):
+    def __init__(self, master, cpf, persistencia: PersistenciaProfissionalSaude, controle: ControleProfissionalSaude,
+                 visao: Visaoprofissional):
         super().__init__(master)
         self.master = master
+        self.cpf_valor = cpf
         self.persistencia = persistencia
         self.controle = controle
         self.visao = visao
@@ -75,10 +78,10 @@ class JanelaRegistroMedico(JanelaPadrao):
         self.entry_localidade = tkinter.Entry(label, font=self.fonte_menor)
         self.entry_localidade.place(x=120, y=180)
 
-        # label_senha = tkinter.Label(label, text='Senha:', font=self.fonte)
-        # label_senha.place(x=20, y=220)
-        # self.entry_senha = tkinter.Entry(label, show='*', font=self.fonte_menor)
-        # self.entry_senha.place(x=120, y=220)
+        label_senha = tkinter.Label(label, text='Senha:', font=self.fonte)
+        label_senha.place(x=20, y=220)
+        self.entry_senha = tkinter.Entry(label, show='*', font=self.fonte_menor)
+        self.entry_senha.place(x=120, y=220)
 
         label_especialiacao = tkinter.Label(label, text='Especialização:', font=self.fonte)
         label_especialiacao.place(x=300, y=20)
@@ -119,6 +122,7 @@ class JanelaRegistroMedico(JanelaPadrao):
         nome = self.entry_nome.get()
         idade = self.entry_idade.get()
         cpf = self.entry_cpf.get()
+        self.cpf_valor = cpf
         sexo = self.sexo_combobox.get()
         localidade = self.entry_localidade.get()
         especializacao = self.entry_especializacao.get()
@@ -127,10 +131,10 @@ class JanelaRegistroMedico(JanelaPadrao):
         tempoatividade = self.entry_localidade.get()
         convenios = self.entry_convenios.get()
         valorconsulta = self.entry_preco_consulta.get()
-        # senha = self.entry_senha.get()
+        senha = self.entry_senha.get()
 
         # VERIFICAR SE AS INFORMAÇÕES SÃO VÁLIDAS, CASO NÃO CHAMA A JANELA SECUNDÁRIA
-        if not nome or not idade or not sexo or not cpf or not localidade or not especializacao or not crm\
+        if not nome or not idade or not sexo or not cpf or not localidade or not especializacao or not crm \
                 or not formacao or not tempoatividade or not convenios or not valorconsulta:
             button_open = tkinter.Button(
                 self.master,
@@ -138,8 +142,8 @@ class JanelaRegistroMedico(JanelaPadrao):
                 command=self.JanelaSecundaria()
             )
         else:
-            self.visao.inserir(nome, idade, cpf, sexo, localidade, especializacao,
-                                crm, formacao, tempoatividade, convenios, valorconsulta)
+            self.visao.inserir(nome, idade, cpf, sexo, localidade, senha, especializacao,
+                               crm, formacao, tempoatividade, convenios, valorconsulta)
             self.configurarJanelaHome()
             # self.configurarJanelaLogin()
 
@@ -151,4 +155,4 @@ class JanelaRegistroMedico(JanelaPadrao):
     def configurarJanelaHome(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaHomeMedico(self.master)
+        JanelaHomeMedico(self.master, self.cpf_valor, self.persistencia, self.controle, self.visao)

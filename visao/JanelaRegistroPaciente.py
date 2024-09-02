@@ -8,15 +8,23 @@ from visao.JanelaHomePaciente import JanelaHomePaciente
 from visao.visaopaciente import Visaopaciente
 from controle.ControlePaciente import ControlePaciente
 from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from visao.visaoprofissional import Visaoprofissional
+from controle.ControleProfissionalSaude import ControleProfissionalSaude
+from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
 
 
 class JanelaRegistroPaciente(JanelaPadrao):
-    def __init__(self, master, persistencia: PersistenciaPaciente, controle: ControlePaciente, visao: Visaopaciente):
+    def __init__(self, master, cpf, persistencia: PersistenciaPaciente, controle: ControlePaciente, visao: Visaopaciente, visaomedico: Visaoprofissional,
+                 persistenciamedico: PersistenciaProfissionalSaude, controlemedico: ControleProfissionalSaude):
         super().__init__(master)
         self.master = master
+        self.cpf_valor = cpf
         self.visaopaciente = visao
         self.controlepaciente = controle
         self.persistenciapaciente = persistencia
+        self.visaomedico = visaomedico
+        self.persistenciamedico = persistenciamedico
+        self.controlemedico = controlemedico
 
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Cadastro Paciente")
@@ -81,6 +89,11 @@ class JanelaRegistroPaciente(JanelaPadrao):
         self.entry_senha = tkinter.Entry(label, show='*', font=self.fonte_menor)
         self.entry_senha.place(x=120, y=220)
 
+        label_sintomas = tkinter.Label(label, text='Sintomas:', font=self.fonte)
+        label_sintomas.place(x=20, y=260)
+        self.entry_sintomas = tkinter.Entry(label, font=self.fonte_menor)
+        self.entry_sintomas.place(x=120, y=260)
+
         botao_registrar = tkinter.Button(self.master, text='Registrar', font=self.fonte_menor, command=self.Registrar)
         botao_registrar.place(relx=0.8, rely=0.95, anchor=CENTER, width=100, height=30)
 
@@ -90,9 +103,11 @@ class JanelaRegistroPaciente(JanelaPadrao):
         nome = self.entry_nome.get()
         idade = self.entry_idade.get()
         cpf = self.entry_cpf.get()
+        self.cpf_valor = cpf
         sexo = self.sexo_combobox.get()
         localidade = self.entry_localidade.get()
-        # senha = self.entry_senha.get()
+        senha = self.entry_senha.get()
+        sintomas = self.entry_sintomas.get()
 
         # VERIFICAR SE AS INFORMAÇÕES SÃO VÁLIDAS, CASO NÃO CHAMA A JANELA SECUNDÁRIA
         if not nome or not idade or not sexo or not cpf or not localidade:
@@ -102,7 +117,7 @@ class JanelaRegistroPaciente(JanelaPadrao):
                 command=self.JanelaSecundaria
             )
         else:
-            self.visaopaciente.inserir(nome, idade, cpf, sexo, localidade)
+            self.visaopaciente.inserir(nome, idade, cpf, sexo, localidade, senha, sintomas)
             self.configurarJanelaHome()
             # self.configurarJanelaLogin()
 
@@ -114,4 +129,5 @@ class JanelaRegistroPaciente(JanelaPadrao):
     def configurarJanelaHome(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaHomePaciente(self.master)
+        JanelaHomePaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente, self.visaopaciente, self.visaomedico,
+                           self.persistenciamedico, self.controlemedico)
