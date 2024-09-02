@@ -10,13 +10,16 @@ from controle.ControlePaciente import ControlePaciente
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 from persistencia.PersistenciaPaciente import PersistenciaPaciente
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-
+from controle.ControleProblema import ControleProblema
+from visao.visaoproblema import Visaoproblema
+from persistencia.PersistenciaProblema import PersistenciaProblema
 
 class JanelaRegistro(JanelaPadrao):
     def __init__(self, master, visaopaciente: Visaopaciente, visaomedico: Visaoprofissional,
                  controlepaciente: ControlePaciente,
                  persistenciapaciente: PersistenciaPaciente, controlemedico: ControleProfissionalSaude,
-                 persitenciamedico: PersistenciaProfissionalSaude):
+                 persitenciamedico: PersistenciaProfissionalSaude, persistenciaproblema: PersistenciaProblema,
+                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
 
         super().__init__(master)
         self.master = master
@@ -27,6 +30,9 @@ class JanelaRegistro(JanelaPadrao):
         self.persistenciapaciente = persistenciapaciente
         self.controlemedico = controlemedico
         self.persistenciamedico = persitenciamedico
+        self.persistenciaproblema = persistenciaproblema
+        self.controleproblema = controleproblema
+        self.visaoproblema = visaoproblema
 
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Cadastro")
@@ -97,7 +103,8 @@ class JanelaRegistro(JanelaPadrao):
         for widget in self.master.winfo_children():
             widget.destroy()
         JanelaRegistroPaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente, self.visaopaciente,
-                               self.visaomedico, self.persistenciamedico, self.controlemedico)
+                               self.visaomedico, self.persistenciamedico, self.controlemedico, self.persistenciaproblema,
+                               self.controleproblema, self.visaoproblema)
 
     def camposProfissional(self):
         for widget in self.master.winfo_children():

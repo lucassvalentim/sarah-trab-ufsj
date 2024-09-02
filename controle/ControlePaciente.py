@@ -21,7 +21,7 @@ class ControlePaciente:
             return self.persistencia.pesquisar_paciente_nome(nome)
         elif cpf is not None:
             condition = f"cpf = '{cpf}'"
-            rows = self.persistencia.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'sintomas'], condition)
+            rows = self.persistencia.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha'], condition)
             if rows:
                 row = rows[0]
                 return Paciente(*row)

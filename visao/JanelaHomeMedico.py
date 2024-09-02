@@ -11,13 +11,15 @@ from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalS
 from persistencia.PersistenciaPaciente import PersistenciaPaciente
 from controle.ControlePaciente import ControlePaciente
 from visao.visaopaciente import Visaopaciente
-
-
+from persistencia.PersistenciaProblema import PersistenciaProblema
+from controle.ControleProblema import ControleProblema
+from visao.visaoproblema import Visaoproblema
 
 
 class JanelaHomeMedico(JanelaPadrao):
     def __init__(self, master, cpf, persistencia: PersistenciaProfissionalSaude, controle: ControleProfissionalSaude, visao: Visaoprofissional,
-                 persistenciapaciente: PersistenciaPaciente, controlepaciente: ControlePaciente, visaopaciente: Visaopaciente):
+                 persistenciapaciente: PersistenciaPaciente, controlepaciente: ControlePaciente, visaopaciente: Visaopaciente,
+                 persistenciaproblema: PersistenciaProblema, controleproblema: ControleProblema, visaoproblema: Visaoproblema):
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
@@ -27,6 +29,9 @@ class JanelaHomeMedico(JanelaPadrao):
         self.persistenciapaciente = persistenciapaciente
         self.controlepaciente = controlepaciente
         self.visaopaciente = visaopaciente
+        self.persistenciaproblema = persistenciaproblema
+        self.controleproblema = controleproblema
+        self.visaoproblema = visaoproblema
 
         self.nome = None
 
@@ -66,7 +71,8 @@ class JanelaHomeMedico(JanelaPadrao):
         img_color = '#FCFCFC'
 
         # if self.var == 0:
-        JanelaContainerMedico(self.master, self.persistenciapaciente, self.controlepaciente, self.visaopaciente)
+        JanelaContainerMedico(self.master, self.persistenciapaciente, self.controlepaciente, self.visaopaciente, self.persistenciaproblema,
+                              self.controleproblema, self.visaoproblema)
 
         # SIDEBAR
         sidebar = tkinter.Frame(self.master, bg=sidebar_color)
