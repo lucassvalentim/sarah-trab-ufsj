@@ -14,8 +14,7 @@ class PersistenciaPaciente(Persistencia):
             cpf TEXT UNIQUE NOT NULL,
             sexo TEXT,
             localidade TEXT,
-            senha TEXT,
-            sintomas TEXT
+            senha TEXT
         );
         """
         self.create_table(create_table_sql)
@@ -24,8 +23,8 @@ class PersistenciaPaciente(Persistencia):
         try:
             paciente.id = self.insert(
                 'Paciente',
-                ['nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'sintomas'],
-                [paciente.nome, paciente.idade, paciente.cpf, paciente.sexo, paciente.localidade, paciente.senha, paciente.sintomas]
+                ['nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha'],
+                [paciente.nome, paciente.idade, paciente.cpf, paciente.sexo, paciente.localidade, paciente.senha]
             )
         except sqlite3.IntegrityError as e:
             print(f"Erro ao inserir paciente: {e}")
@@ -41,16 +40,16 @@ class PersistenciaPaciente(Persistencia):
 
     def pesquisar_paciente_id(self, id):
         condition = f"id = {id}"
-        rows = self.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'sintomas'], condition)
+        rows = self.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha'], condition)
         if rows:
             row = rows[0]
             return Paciente(*row)
 
     def pesquisar_paciente_nome(self, nome):
         condition = f"nome LIKE '%{nome}%'"
-        rows = self.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'sintomas'], condition)
+        rows = self.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha'], condition)
         return [Paciente(*row) for row in rows]
 
     def carregar_pacientes(self):
-        rows = self.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'sintomas'])
+        rows = self.fetch('Paciente', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha'])
         return [Paciente(*row) for row in rows]

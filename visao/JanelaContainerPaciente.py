@@ -1,14 +1,16 @@
 import tkinter
-from tkinter import *
 from visao.JanelaPadrao import JanelaPadrao
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-
+from controle.ControleProblema import ControleProblema
+from visao.visaoproblema import Visaoproblema
+from persistencia.PersistenciaProblema import PersistenciaProblema
 
 class JanelaContainerPaciente(JanelaPadrao):
     def __init__(self, master, visaomedico: Visaoprofissional, persistenciamedico: PersistenciaProfissionalSaude,
-                 controlemedico: ControleProfissionalSaude):
+                 controlemedico: ControleProfissionalSaude, persistenciaproblema: PersistenciaProblema,
+                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
         super().__init__(master)
 
         # INICIALIZA OS ATRIBUTOS FIXOS DA TELA

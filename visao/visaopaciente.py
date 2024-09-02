@@ -13,8 +13,8 @@ class Visaopaciente:
             cpf,
             sexo,
             localidade,
-            senha,
-            sintomas):
+            senha
+            ):
 
         paciente = Paciente(
             0,
@@ -23,8 +23,7 @@ class Visaopaciente:
             cpf,
             sexo,
             localidade,
-            senha,
-            sintomas
+            senha
             )
 
         self.controle.inserir(paciente)

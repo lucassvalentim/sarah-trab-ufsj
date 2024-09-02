@@ -11,11 +11,14 @@ from persistencia.PersistenciaPaciente import PersistenciaPaciente
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-
+from controle.ControleProblema import ControleProblema
+from visao.visaoproblema import Visaoproblema
+from persistencia.PersistenciaProblema import PersistenciaProblema
 
 class JanelaHomePaciente(JanelaPadrao):
     def __init__(self, master, cpf, persistencia: PersistenciaPaciente, controle: ControlePaciente, visao: Visaopaciente, visaomedico: Visaoprofissional,
-                 persistenciamedico: PersistenciaProfissionalSaude, controlemedico: ControleProfissionalSaude):
+                 persistenciamedico: PersistenciaProfissionalSaude, controlemedico: ControleProfissionalSaude, persistenciaproblema: PersistenciaProblema,
+                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
@@ -26,8 +29,11 @@ class JanelaHomePaciente(JanelaPadrao):
         self.visaomedico = visaomedico
         self.persistenciamedico = persistenciamedico
         self.controlemedico = controlemedico
+        self.persistenciaproblema = persistenciaproblema
+        self.controleproblema = controleproblema
+        self.visaoproblema = visaoproblema
 
-        self.nome = ""
+        self.nome = None
 
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Sarah")
@@ -65,7 +71,8 @@ class JanelaHomePaciente(JanelaPadrao):
         img_color = '#FCFCFC'
 
         # if self.var == 0:
-        JanelaContainerPaciente(self.master, self.visaomedico, self.persistenciamedico, self.controlemedico)
+        JanelaContainerPaciente(self.master, self.visaomedico, self.persistenciamedico, self.controlemedico, self.persistenciaproblema,
+                                self.controleproblema, self.visaoproblema)
 
         # SIDEBAR
         sidebar = tkinter.Frame(self.master, bg=sidebar_color)

@@ -11,11 +11,14 @@ from persistencia.PersistenciaPaciente import PersistenciaPaciente
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-
+from persistencia.PersistenciaProblema import PersistenciaProblema
+from controle.ControleProblema import ControleProblema
+from visao.visaoproblema import Visaoproblema
 
 class JanelaRegistroPaciente(JanelaPadrao):
     def __init__(self, master, cpf, persistencia: PersistenciaPaciente, controle: ControlePaciente, visao: Visaopaciente, visaomedico: Visaoprofissional,
-                 persistenciamedico: PersistenciaProfissionalSaude, controlemedico: ControleProfissionalSaude):
+                 persistenciamedico: PersistenciaProfissionalSaude, controlemedico: ControleProfissionalSaude, persistenciaproblema: PersistenciaProblema,
+                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
@@ -25,6 +28,9 @@ class JanelaRegistroPaciente(JanelaPadrao):
         self.visaomedico = visaomedico
         self.persistenciamedico = persistenciamedico
         self.controlemedico = controlemedico
+        self.persistenciaproblema = persistenciaproblema
+        self.controleproblema = controleproblema
+        self.visaoproblema = visaoproblema
 
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Cadastro Paciente")
@@ -117,7 +123,8 @@ class JanelaRegistroPaciente(JanelaPadrao):
                 command=self.JanelaSecundaria
             )
         else:
-            self.visaopaciente.inserir(nome, idade, cpf, sexo, localidade, senha, sintomas)
+            self.visaopaciente.inserir(nome, idade, cpf, sexo, localidade, senha)
+            self.visaoproblema.inserir(self.cpf_valor, sintomas)
             self.configurarJanelaHome()
             # self.configurarJanelaLogin()
 
@@ -130,4 +137,4 @@ class JanelaRegistroPaciente(JanelaPadrao):
         for widget in self.master.winfo_children():
             widget.destroy()
         JanelaHomePaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente, self.visaopaciente, self.visaomedico,
-                           self.persistenciamedico, self.controlemedico)
+                           self.persistenciamedico, self.controlemedico, self.persistenciaproblema, self.controleproblema, self.visaoproblema)

@@ -11,13 +11,17 @@ from visao.visaoprofissional import Visaoprofissional
 from controle.ControlePaciente import ControlePaciente
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from controle.ControleProblema import ControleProblema
+from visao.visaoproblema import Visaoproblema
+from persistencia.PersistenciaProblema import PersistenciaProblema
 
 
 class JanelaLogin(JanelaPadrao):
     def __init__(self, master, visaopaciente: Visaopaciente, visaomedico: Visaoprofissional,
                  controlepaciente: ControlePaciente,
                  persistenciapaciente: PersistenciaPaciente, controlemedico: ControleProfissionalSaude,
-                 persitenciamedico: PersistenciaProfissionalSaude,
+                 persitenciamedico: PersistenciaProfissionalSaude, persistenciaproblema: PersistenciaProblema,
+                 controleproblema: ControleProblema, visaoproblema: Visaoproblema
                  ):
 
         super().__init__(master)
@@ -28,6 +32,10 @@ class JanelaLogin(JanelaPadrao):
         self.persistenciapaciente = persistenciapaciente
         self.controlemedico = controlemedico
         self.persistenciamedico = persitenciamedico
+        self.persistenciaproblema = persistenciaproblema
+        self.controleproblema = controleproblema
+        self.visaoproblema = visaoproblema
+
         self.cpf_valor = None
 
         # TODO: deixar bonitinho o titulo da pagina (colocar logo)
@@ -81,7 +89,8 @@ class JanelaLogin(JanelaPadrao):
         JanelaRegistro(self.master, self.visaopaciente, self.visaomedico,
                        self.controlepaciente,
                        self.persistenciapaciente, self.controlemedico,
-                       self.persistenciamedico)
+                       self.persistenciamedico, self.persistenciaproblema,
+                       self.controleproblema, self.visaoproblema)
 
     #TODO: INVERTI A TELA DE MEDICO E PACIENTE NA PARTE DE MOSTRAR OS CARDS, ARRUMAR
 
@@ -100,10 +109,12 @@ class JanelaLogin(JanelaPadrao):
                 widget.destroy()
             JanelaHomePaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente,
                                self.visaopaciente, self.visaomedico,
-                               self.persistenciamedico, self.controlemedico)
+                               self.persistenciamedico, self.controlemedico, self.persistenciaproblema,
+                               self.controleproblema, self.visaoproblema)
 
         else:
             for widget in self.master.winfo_children():
                 widget.destroy()
             JanelaHomeMedico(self.master, self.cpf_valor, self.persistenciamedico, self.controlemedico,
-                             self.visaomedico, self.persistenciapaciente, self.controlepaciente, self.visaopaciente)
+                             self.visaomedico, self.persistenciapaciente, self.controlepaciente, self.visaopaciente,
+                             self.persistenciaproblema, self.controleproblema, self.visaoproblema)

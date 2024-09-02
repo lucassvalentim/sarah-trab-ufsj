@@ -4,11 +4,15 @@ from visao.JanelaPadrao import JanelaPadrao
 from visao.visaopaciente import Visaopaciente
 from controle.ControlePaciente import ControlePaciente
 from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from visao.visaoproblema import Visaoproblema
+from controle.ControleProblema import ControleProblema
+from persistencia.PersistenciaProblema import PersistenciaProblema
 
 
 class JanelaContainerMedico(JanelaPadrao):
     def __init__(self, master, persistenciapaciente: PersistenciaPaciente,
-                 controlepaciente: ControlePaciente, visaopaciente: Visaopaciente, ):
+                 controlepaciente: ControlePaciente, visaopaciente: Visaopaciente, persistenciaproblema: PersistenciaProblema,
+                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
         super().__init__(master)
 
         self.iterador = 1
@@ -16,6 +20,9 @@ class JanelaContainerMedico(JanelaPadrao):
         self.visaopaciente = visaopaciente
         self.persistenciapaciente = persistenciapaciente
         self.controlepaciente = controlepaciente
+        self.persitenciaproblema = persistenciaproblema
+        self.controleproblema = controleproblema
+        self.visaoproblema = visaoproblema
 
         self.nome = None
         self.idade = None
@@ -44,6 +51,12 @@ class JanelaContainerMedico(JanelaPadrao):
             if info.id == self.iterador:
                 self.nome = info.nome
                 self.idade = info.idade
+                print(f'id {info.id} e iterador {self.iterador}')
+                break
+
+        row = self.persitenciaproblema.carregar_problema()
+        for info in row:
+            if info.id == self.iterador:
                 self.sintomas = info.sintomas
                 print(f'id {info.id} e iterador {self.iterador}')
                 break
