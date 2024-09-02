@@ -1,11 +1,11 @@
 import tkinter
-from sqlite3 import connect
 from tkinter import *
 from PIL import ImageTk, Image
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from visao.JanelaHomeMedico import JanelaHomeMedico
+from visao.JanelaHomePaciente import JanelaHomePaciente
 from visao.JanelaRegistro import JanelaRegistro
 from visao.JanelaPadrao import JanelaPadrao
-from visao.JanelaHome import JanelaHome
 from visao.visaopaciente import Visaopaciente
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControlePaciente import ControlePaciente
@@ -17,7 +17,8 @@ class JanelaLogin(JanelaPadrao):
     def __init__(self, master, visaopaciente: Visaopaciente, visaomedico: Visaoprofissional,
                  controlepaciente: ControlePaciente,
                  persistenciapaciente: PersistenciaPaciente, controlemedico: ControleProfissionalSaude,
-                 persitenciamedico: PersistenciaProfissionalSaude):
+                 persitenciamedico: PersistenciaProfissionalSaude,
+                 ):
 
         super().__init__(master)
         self.master = master
@@ -27,6 +28,7 @@ class JanelaLogin(JanelaPadrao):
         self.persistenciapaciente = persistenciapaciente
         self.controlemedico = controlemedico
         self.persistenciamedico = persitenciamedico
+        self.cpf_valor = None
 
         # TODO: deixar bonitinho o titulo da pagina (colocar logo)
         self.master.title("Login")
@@ -47,10 +49,11 @@ class JanelaLogin(JanelaPadrao):
         label.place(relx=0.5, rely=0.6, anchor=tkinter.CENTER)
 
         # LABEL USUÁRIO
-        label_nome = tkinter.Label(label, text='CPF', font=self.fonte, padx=5, pady=5)
-        label_nome.pack()
-        entry_nome = tkinter.Entry(label, font=self.fonte_menor)
-        entry_nome.pack()
+        label_cpf = tkinter.Label(label, text='CPF', font=self.fonte, padx=5, pady=5)
+        label_cpf.pack()
+        self.entry_cpf = tkinter.Entry(label, font=self.fonte_menor)
+        self.entry_cpf.pack()
+
 
         # LABEL SENHA
         label_senha = tkinter.Label(label, text='Senha', font=self.fonte, padx=5, pady=5)
@@ -84,6 +87,23 @@ class JanelaLogin(JanelaPadrao):
 
     # FUNÇÃO RESPONSÁVEL POR CHAMAR A TELA HOME
     def configurarJanelaHome(self):
-        for widget in self.master.winfo_children():
-            widget.destroy()
-        JanelaHome(self.master)
+        self.cpf_valor = self.entry_cpf.get()
+        tipo = 0
+        row = self.persistenciapaciente.carregar_pacientes()
+        for info in row:
+            if self.cpf_valor == info.cpf:
+                tipo = 1
+                break
+
+        if tipo == 1:
+            for widget in self.master.winfo_children():
+                widget.destroy()
+            JanelaHomePaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente,
+                               self.visaopaciente, self.visaomedico,
+                               self.persistenciamedico, self.controlemedico)
+
+        else:
+            for widget in self.master.winfo_children():
+                widget.destroy()
+            JanelaHomeMedico(self.master, self.cpf_valor, self.persistenciamedico, self.controlemedico,
+                             self.visaomedico, self.persistenciapaciente, self.controlepaciente, self.visaopaciente)
