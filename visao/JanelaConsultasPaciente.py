@@ -11,14 +11,6 @@ class JanelaConsultasPaciente(JanelaPadrao):
         self.secondary_window.resizable(0, 0)
         self.secondary_window.title("Consultas")
         self.secondary_window.config(width=600, height=450, bg=self.sidebar_color)
-        # self.button_close = tkinter.Button(
-        #     self.secondary_window,
-        #     text="Fechar",
-        #     command=self.secondary_window.destroy,
-        #     bg=self.selectionbar_color
-        #
-        # )
-        # self.button_close.place(x=490, y=450)
 
         # INICIALIZANDO A CONFIGURAÇÃO DOS CONTAINERS COM AS INFORMAÇÕES
         self.container_agendadas = tkinter.Frame(self.secondary_window, bg=self.sidebar_color)
@@ -26,10 +18,6 @@ class JanelaConsultasPaciente(JanelaPadrao):
 
         self.container_analise = tkinter.Frame(self.secondary_window, bg=self.sidebar_color)
         self.container_analise.place(relx=0.05, rely=0.5, relwidth=0.9, relheight=0.4)
-
-        # VARIAVEIS PARA IMPLEMENTAR A LOGICA DE TROCAR AS INFORMAÇÕES DA CONSULTA EM ANALISE E AGENDA
-        self.var_um = 0
-        self.var_dois = 0
 
         self.telapaciente()
 
@@ -49,12 +37,6 @@ class JanelaConsultasPaciente(JanelaPadrao):
                                                highlightthickness=2)
         consultas_agendadas_um.place(relx=0.0, rely=0.0, relwidth=1, relheight=0.3)
 
-        # CONFIGURAÇÃO DO SUBFRAME DOIS
-        consultas_agendadas_dois = tkinter.Frame(self.container_agendadas, bg=self.selectionbar_color,
-                                                 highlightbackground="grey",
-                                                 highlightthickness=2)
-        consultas_agendadas_dois.place(relx=0.0, rely=0.4, relwidth=1, relheight=0.3)
-
         # INFORMAÇÕES DENTRO DO SUBFRAME UM
         label_nome_um = tkinter.Label(consultas_agendadas_um, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
                                                                    'Horário: ' + '14:30', foreground="black",
@@ -66,18 +48,6 @@ class JanelaConsultasPaciente(JanelaPadrao):
                                                foreground="black",
                                                bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_um.place(x=5, y=30)
-
-        # INFORMAÇÕES DENTRO DO SUBFRAME DOIS
-        label_nome_dois = tkinter.Label(consultas_agendadas_dois, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
-                                                                       'Horário: ' + '14:30', foreground="black",
-                                        bg=self.selectionbar_color, font=self.fonte_menor)
-        label_nome_dois.place(x=5, y=5)
-
-        label_especialidade_dois = tkinter.Label(consultas_agendadas_dois, text="Especialização: " + 'Ginecologista'
-                                                                                + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
-                                                 foreground="black",
-                                                 bg=self.selectionbar_color, font=self.fonte_menor)
-        label_especialidade_dois.place(x=5, y=30)
 
         # BOTAO PROXIMO
         botao_prox = tkinter.Button(
@@ -114,24 +84,6 @@ class JanelaConsultasPaciente(JanelaPadrao):
                                                bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_um.place(x=5, y=30)
 
-        # CONFIGURAÇÃO DO SUBFRAME DOIS
-        consultas_analise_dois = tkinter.Frame(self.container_analise, bg=self.selectionbar_color,
-                                               highlightbackground="grey",
-                                               highlightthickness=2
-                                               )
-        consultas_analise_dois.place(relx=0.0, rely=0.4, relwidth=1, relheight=0.3)
-
-        # INFORMAÇÕES DENTRO DO SUBFRAME DOIS
-        label_nome_dois = tkinter.Label(consultas_analise_dois, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
-                                                                     'Horário: ' + '14:30', foreground="black",
-                                        bg=self.selectionbar_color, font=self.fonte_menor)
-        label_nome_dois.place(x=5, y=5)
-
-        label_especialidade_dois = tkinter.Label(consultas_analise_dois, text="Especialização: " + 'Ginecologista'
-                                                                              + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
-                                                 foreground="black",
-                                                 bg=self.selectionbar_color, font=self.fonte_menor)
-        label_especialidade_dois.place(x=5, y=30)
 
         # BOTAO PROXIMO
         botao_prox = tkinter.Button(
