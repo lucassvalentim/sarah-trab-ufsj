@@ -140,5 +140,6 @@ class JanelaRegistroPaciente(JanelaPadrao):
             visaoproblema=self.visaoproblema,
             controlePaciente=self.controlepaciente,
             controlemedico=self.controlemedico,
-            controleproblema=self.controleproblema
+            controleproblema=self.controleproblema,
+            controleagendamento=self.controleagendamento
         )

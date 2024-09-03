@@ -14,12 +14,14 @@ from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalS
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
-from visao.JanelaEditarSintomas import JanelaEditarSintomas
+from controle.ControleAgendamento import ControleAgendamento
 
 class JanelaHomePaciente(JanelaPadrao):
     def __init__(self, master, cpf, visao: Visaopaciente, visaoproblema: Visaoproblema, controlePaciente:ControlePaciente,
-                 controlemedico: ControleProfissionalSaude, controleproblema: ControleProblema):
+                 controlemedico: ControleProfissionalSaude, controleproblema: ControleProblema, controleagendamento: ControleAgendamento):
         super().__init__(master)
+        self.paciente = controlePaciente.pesquisar(cpf=cpf)
+        self.medico = controlemedico.pesquisar(cpf=cpf)
         self.master = master
         self.cpf_valor = cpf
         self.visaopaciente = visao
@@ -27,6 +29,7 @@ class JanelaHomePaciente(JanelaPadrao):
         self.controlemedico = controlemedico
         self.controlePaciente = controlePaciente
         self.controleproblema = controleproblema
+        self.controleagendamento = controleagendamento
 
         self.tipo = 2
 
@@ -72,7 +75,10 @@ class JanelaHomePaciente(JanelaPadrao):
             master=self.master,
             controleproblema=self.controleproblema,
             visaoproblema=self.visaoproblema,
-            controleProfissionalSaude= self.controlemedico
+            controleProfissionalSaude= self.controlemedico,
+            paciente= self.paciente,
+            medico= self.medico,
+            controleagendamento= self.controleagendamento
         )
 
         # SIDEBAR
@@ -91,24 +97,17 @@ class JanelaHomePaciente(JanelaPadrao):
         submenu_frame = tkinter.Frame(sidebar, bg=sidebar_color)
         submenu_frame.place(relx=0, rely=0.2, relwidth=1, relheight=0.85)
 
-        botao_editar = tkinter.Button(submenu_frame, text='Editar Sintomas', bg=selectionbar_color,
-                                      font=self.fonte_menor, command=self.botaoeditarpressionado)
-        botao_editar.place(relx=0.3, rely=0.1, anchor=CENTER, width=100, height=30)
-
         botao_consultas = tkinter.Button(submenu_frame, text='Consultas', bg=selectionbar_color,
                                          font=self.fonte_menor, command=self.botaoconsultaspressionado)
-        botao_consultas.place(relx=0.3, rely=0.2, anchor=CENTER, width=100, height=30)
+        botao_consultas.place(relx=0.3, rely=0.1, anchor=CENTER, width=100, height=30)
 
         botao_mensagens = tkinter.Button(submenu_frame, text='Sair', bg=selectionbar_color,
                                          font=self.fonte_menor, command=self.FecharApp)
-        botao_mensagens.place(relx=0.3, rely=0.3, anchor=CENTER, width=100, height=30)
+        botao_mensagens.place(relx=0.3, rely=0.2, anchor=CENTER, width=100, height=30)
 
         botao_excluir_perfil = tkinter.Button(submenu_frame, text='Excluir perfil', bg=selectionbar_color,
                                               font=self.fonte_menor, command=self.Excluirperfil)
-        botao_excluir_perfil.place(relx=0.3, rely=0.4, anchor=CENTER, width=100, height=30)
-
-    def botaoeditarpressionado(self):
-        JanelaEditarSintomas(self.master, self.cpf_valor, self.controleproblema)
+        botao_excluir_perfil.place(relx=0.3, rely=0.3, anchor=CENTER, width=100, height=30)
 
     # FUNÇÃO CHAMA A JANELA DE CONSULTAS
     def botaoconsultaspressionado(self):

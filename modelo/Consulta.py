@@ -5,7 +5,7 @@ from datetime import datetime
 
 class Consulta(Objeto):
     
-    def __init__(self, id: int, profissional: ProfissionalSaude, paciente: Paciente, valor: float, data_horario: datetime):
+    def __init__(self, id: int, profissional: ProfissionalSaude, paciente: Paciente, valor: float, data_horario: str):
         super().__init__(id)
         self.profissional = profissional
         self.paciente = paciente

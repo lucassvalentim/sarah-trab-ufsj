@@ -6,11 +6,13 @@ from visao.JanelaLogin import JanelaLogin
 from tkinter import *
 from controle.ControleConsulta import ControleConsulta
 from persistencia.PersistenciaConsulta import PersistenciaConsulta
+from persistencia.PersistenciaAgendamento import PersistenciaAgendamento
 
 from visao.visaopaciente import Visaopaciente
 from visao.visaoproblema import Visaoproblema
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
+from controle.ControleAgendamento import ControleAgendamento
 
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
 
@@ -20,6 +22,7 @@ persistenciaProfissionalSaude = PersistenciaProfissionalSaude('profissionais.db'
 persistenciaPaciente = PersistenciaPaciente('pacientes.db')
 controleProfissionalSaude = ControleProfissionalSaude(persistenciaProfissionalSaude)
 controlePaciente = ControlePaciente(persistenciaPaciente)
+controleAgendamento = ControleAgendamento(PersistenciaAgendamento)
 visaoProfissionalSaude = Visaoprofissional(controleProfissionalSaude)
 visaoPaciente = Visaopaciente(controlePaciente)
 
@@ -38,7 +41,8 @@ jan = JanelaLogin(
     controlemedico=controleProfissionalSaude,
     controleConsulta=controleConsulta,
     visaoproblema=visaoProblema,
-    controleproblema=controleProblema
+    controleproblema=controleProblema,
+    controleagendamento=controleAgendamento
 )
 
 master.mainloop()

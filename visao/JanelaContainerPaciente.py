@@ -1,19 +1,28 @@
 import tkinter
 from visao.JanelaPadrao import JanelaPadrao
 from visao.visaoprofissional import Visaoprofissional
-from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-from controle.ControleProblema import ControleProblema
+from visao.JanelaAgendamento import JanelaAgendamento
 from visao.visaoproblema import Visaoproblema
+from controle.ControleProfissionalSaude import ControleProfissionalSaude
+from controle.ControleProblema import ControleProblema
+from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
 from persistencia.PersistenciaProblema import PersistenciaProblema
+from modelo.Paciente import Paciente
+from modelo.ProfissionalSaude import ProfissionalSaude
+from controle.ControleAgendamento import ControleAgendamento
 
 class JanelaContainerPaciente(JanelaPadrao):
     def __init__(self, master, visaoproblema: Visaoproblema,
                  controleproblema: ControleProblema,
-                 controleProfissionalSaude:ControleProfissionalSaude):
+                 controleProfissionalSaude:ControleProfissionalSaude,
+                 paciente: Paciente,medico:ProfissionalSaude,
+                 controleagendamento: ControleAgendamento):
         super().__init__(master)
 
         self.controleProfissionalSaude = controleProfissionalSaude
+        self.paciente = paciente
+        self.medico = medico
+        self.controleagendamento = controleagendamento
 
         # INICIALIZA OS ATRIBUTOS FIXOS DA TELA
 
@@ -123,7 +132,9 @@ class JanelaContainerPaciente(JanelaPadrao):
         valor_usuario.place(x=60, y=200, anchor="w")
 
         # BOTÃO CURTIR
-        curtir_button = tkinter.Button(self.container, text='Agendar', height=1, width=5, bg=self.selectionbar_color)
+        curtir_button = tkinter.Button(self.container, text='Agendar', height=1, width=5, 
+                                        bg=self.selectionbar_color,
+                                        command=self.botaoAgendar)
         curtir_button.place(x=250, y=270)
 
         if self.quantidade > 1 and self.iterador < self.quantidade:
@@ -133,7 +144,16 @@ class JanelaContainerPaciente(JanelaPadrao):
                                               bg=self.selectionbar_color,
                                               command=self.botaoproxpressionado)
             self.next_button.place(x=470, y=270)
+        else:
+            self.next_button = None
 
+        if self.iterador > 1:
+            self.anterior_button = tkinter.Button(self.container, text='Anterior', height=1, width=5,
+                                                  bg=self.selectionbar_color,
+                                                  command=self.botaoanteriorpressionado)
+            self.anterior_button.place(x=50, y=270)
+        else:
+            self.anterior_button = None
 
     def botaoproxpressionado(self):
 
@@ -160,3 +180,7 @@ class JanelaContainerPaciente(JanelaPadrao):
                                              bg=self.selectionbar_color,
                                              command=self.botaoanteriorpressionado)
             self.anterior_button.place(x=50, y=270)
+
+
+    def botaoAgendar(self):
+        JanelaAgendamento(self.master, medico=self.medico, paciente=self.paciente, controleagendamento=self.controleagendamento)

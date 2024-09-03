@@ -15,11 +15,12 @@ from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
 from controle.ControleConsulta import ControleConsulta
+from controle.ControleAgendamento import ControleAgendamento
 
 class JanelaLogin(JanelaPadrao):
     def __init__(self, master, visaopaciente: Visaopaciente, controlepaciente: ControlePaciente, visaomedico: Visaoprofissional,
                  controlemedico: ControleProfissionalSaude, controleConsulta : ControleConsulta, visaoproblema: Visaoproblema,
-                 controleproblema: ControleProblema):
+                 controleproblema: ControleProblema, controleagendamento: ControleAgendamento):
 
         super().__init__(master)
         self.master = master
@@ -30,6 +31,7 @@ class JanelaLogin(JanelaPadrao):
         self.controleproblema = controleproblema
         self.controleconsulta = controleConsulta
         self.visaoproblema = visaoproblema
+        self.controleagendamento = controleagendamento
 
         self.cpf_valor = None
 
@@ -114,7 +116,8 @@ class JanelaLogin(JanelaPadrao):
                 visaoproblema=self.visaoproblema,
                 controlePaciente=self.controlepaciente,
                 controlemedico=self.controlemedico,
-                controleproblema=self.controleproblema
+                controleproblema=self.controleproblema,
+                controleagendamento=self.controleagendamento
             )
 
         else:

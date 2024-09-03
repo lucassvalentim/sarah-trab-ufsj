@@ -15,7 +15,15 @@ class JanelaConsultasMedico(JanelaPadrao):
         self.container_agendadas = tkinter.Frame(self.secondary_window, bg=self.sidebar_color)
         self.container_agendadas.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.4)
 
+        # VARIAVEIS PARA IMPLEMENTAR A LOGICA DE TROCAR AS INFORMAÇÕES DA CONSULTA EM ANALISE E AGENDA
+        self.var_um = 0
+        self.var_dois = 0
+
+        self.telamedico()
+
+    def telamedico(self):
         self.consultasagendasmedicos()
+
 
     # FRAME RESPONŚAVEL PELAS CONSULTAS AGENDADAS MÉDICOS
     def consultasagendasmedicos(self):
@@ -57,6 +65,7 @@ class JanelaConsultasMedico(JanelaPadrao):
 
     # VERIFICA SE APERTOU O BOTÃO PROXIMO, SE SIM CRIA UM BOTÃO ANTERIOR
     def apertoubotaoproxagenda(self):
+        self.var_um += 1
 
         botao_ant = tkinter.Button(
             self.container_agendadas,
