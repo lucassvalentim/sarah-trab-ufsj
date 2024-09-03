@@ -56,6 +56,13 @@ class PersistenciaProfissionalSaude(Persistencia):
         rows = self.fetch('ProfissionalSaude', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'especializacao', 'crm', 'formacao', 'tempoAtividade', 'convenios', 'precoConsulta'], condition)
         return [ProfissionalSaude(*row) for row in rows]
 
+    def pesquisar_profissional_cpf(self, cpf):
+        condition = f"cpf = '%{cpf}%'"
+        rows = self.fetch('ProfissionalSaude',
+                          ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'especializacao', 'crm',
+                           'formacao', 'tempoAtividade', 'convenios', 'precoConsulta'], condition)
+        return [ProfissionalSaude(*row) for row in rows]
+
     def carregar_profissionais(self):
         rows = self.fetch('ProfissionalSaude', ['id', 'nome', 'idade', 'cpf', 'sexo', 'localidade', 'senha', 'especializacao', 'crm', 'formacao', 'tempoAtividade', 'convenios', 'precoConsulta'])
         return [ProfissionalSaude(*row) for row in rows]

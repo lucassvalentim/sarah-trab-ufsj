@@ -14,26 +14,25 @@ from visao.visaopaciente import Visaopaciente
 from persistencia.PersistenciaProblema import PersistenciaProblema
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
-
+from persistencia.PersistenciaConsulta import PersistenciaConsulta
+from controle.ControleConsulta import ControleConsulta
 
 class JanelaHomeMedico(JanelaPadrao):
-    def __init__(self, master, cpf, persistencia: PersistenciaProfissionalSaude, controle: ControleProfissionalSaude, visao: Visaoprofissional,
-                 persistenciapaciente: PersistenciaPaciente, controlepaciente: ControlePaciente, visaopaciente: Visaopaciente,
-                 persistenciaproblema: PersistenciaProblema, controleproblema: ControleProblema, visaoproblema: Visaoproblema):
+    def __init__(self, master, cpf, visao: Visaoprofissional, controle: ControleProfissionalSaude,
+                 controleConsulta: ControleConsulta, controleProblema:ControleProblema):
+
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
-        self.persistenciamedico = persistencia
         self.visaomedico = visao
         self.controlemedico = controle
-        self.persistenciapaciente = persistenciapaciente
-        self.controlepaciente = controlepaciente
-        self.visaopaciente = visaopaciente
-        self.persistenciaproblema = persistenciaproblema
-        self.controleproblema = controleproblema
-        self.visaoproblema = visaoproblema
+        self.controleConsulta = controleConsulta
+        self.controleProblema = controleProblema
 
-        self.nome = None
+        if self.controlemedico.pesquisar(cpf=cpf):
+            self.id = self.controlemedico.pesquisar(cpf=cpf).id
+        else:
+            self.id = -1
 
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Sarah")
@@ -45,7 +44,7 @@ class JanelaHomeMedico(JanelaPadrao):
         self.carregarinformacoes()
 
     def carregarinformacoes(self):
-        row = self.persistenciamedico.carregar_profissionais()
+        row = self.controlemedico.carregar()
         n = None
         for info in row:
             if self.cpf_valor == info.cpf:
@@ -71,8 +70,12 @@ class JanelaHomeMedico(JanelaPadrao):
         img_color = '#FCFCFC'
 
         # if self.var == 0:
-        JanelaContainerMedico(self.master, self.persistenciapaciente, self.controlepaciente, self.visaopaciente, self.persistenciaproblema,
-                              self.controleproblema, self.visaoproblema)
+        JanelaContainerMedico(
+            master=self.master,
+            id=self.id,
+            controleConsulta=self.controleConsulta,
+            controleProblema=self.controleProblema
+        )
 
         # SIDEBAR
         sidebar = tkinter.Frame(self.master, bg=sidebar_color)
@@ -84,6 +87,8 @@ class JanelaHomeMedico(JanelaPadrao):
         logo = tkinter.Label(brand_frame)
         logo.place(x=5, y=20)
 
+        if self.nome is None:
+            self.nome = "Nome não disponível"
         img_name = tkinter.Label(brand_frame, text="Nome: " + self.nome, bg=sidebar_color, font=self.fonte_menor)
         img_name.place(x=20, y=27, anchor="w")
 
@@ -108,7 +113,7 @@ class JanelaHomeMedico(JanelaPadrao):
         JanelaConsultasMedico(self.master)
 
     def Excluirperfil(self):
-        row = self.persistenciamedico.carregar_profissionais()
+        row = self.controlemedico.carregar()
         id = 0
         print(self.cpf_valor)
         for info in row:

@@ -7,22 +7,19 @@ from persistencia.PersistenciaPaciente import PersistenciaPaciente
 from visao.visaoproblema import Visaoproblema
 from controle.ControleProblema import ControleProblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
-
+from persistencia.PersistenciaConsulta import PersistenciaConsulta
+from controle.ControleConsulta import ControleConsulta
 
 class JanelaContainerMedico(JanelaPadrao):
-    def __init__(self, master, persistenciapaciente: PersistenciaPaciente,
-                 controlepaciente: ControlePaciente, visaopaciente: Visaopaciente, persistenciaproblema: PersistenciaProblema,
-                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
+    def __init__(self, master, id, controleConsulta : ControleConsulta, controleProblema:ControleProblema):
         super().__init__(master)
 
         self.iterador = 1
         self.quantidade = 0
-        self.visaopaciente = visaopaciente
-        self.persistenciapaciente = persistenciapaciente
-        self.controlepaciente = controlepaciente
-        self.persitenciaproblema = persistenciaproblema
-        self.controleproblema = controleproblema
-        self.visaoproblema = visaoproblema
+
+        self.controleconsulta = controleConsulta
+        self.controleProblema = controleProblema
+        self.id = id
 
         self.nome = None
         self.idade = None
@@ -37,52 +34,60 @@ class JanelaContainerMedico(JanelaPadrao):
         self.container = tkinter.Frame(self.master, bg=self.sidebar_color)
         self.container.place(relx=0.3, rely=0.25, relwidth=0.6, relheight=0.6)
 
-        self.quantidademedicos()
+        self.quantidadespacientes()
 
-    def quantidademedicos(self):
-        row = self.persistenciapaciente.carregar_pacientes()
-        for info in row:
-            self.quantidade += 1
+    def quantidadespacientes(self):
+        # self.quantidade = len(PersistenciaConsulta.pesquisar_profissional_id(self.id))
+        if self.controleconsulta.carregar() is not None:
+            self.quantidade = len(self.controleconsulta.carregar())
+        else:
+            self.quantidade = 0
+        # for info in row:
+        #     self.quantidade += 1
         return self.carregarinformacoes()
 
     def carregarinformacoes(self):
-        row = self.persistenciapaciente.carregar_pacientes()
-        for info in row:
-            if info.id == self.iterador:
-                self.nome = info.nome
-                self.idade = info.idade
-                print(f'id {info.id} e iterador {self.iterador}')
-                break
+        consultas = self.controleconsulta.carregar_por_profissional(self.id)
+        if consultas is not None:
+            for consulta in consultas:
+                if consulta.id == self.iterador:
+                    self.sintomas = self.controleProblema.pesquisar(cpf=consulta.paciente.cpf).sintomas
+                    self.nome = consulta.paciente.nome
+                    self.idade = consulta.paciente.idade
+                    print(f'id {consulta.paciente.id} e iterador {self.iterador}')
+                    break
 
-        row = self.persitenciaproblema.carregar_problema()
-        for info in row:
-            if info.id == self.iterador:
-                self.sintomas = info.sintomas
-                print(f'id {info.id} e iterador {self.iterador}')
-                break
-
+        # row = self.persitenciaproblema.pesquisar_problema_cpf()
+        # for info in row:
+        #     if info.id == self.iterador:
+        #         self.sintomas = info.sintomas
+        #         print(f'id {info.id} e iterador {self.iterador}')
+        #         break
         self.telapaciente()
 
     # FUNÇÃO RESPONSÁVEL POR MOSTRAR AS INFORMAÇÕES DO PACIENTE PARA O MÉDICO
     def telapaciente(self):
 
-        # NOME MEDICO
-        img_name = tkinter.Label(self.container, text='Nome: ' + self.nome, bg=self.sidebar_color, font=self.fonte_menor)
-        img_name.place(x=60, y=25, anchor="w")
+        # NOME PACIENTE
+        if self.nome is None:
+            self.nome = "Nenhuma consulta pendente"
+        else:
+            img_name = tkinter.Label(self.container, text='Nome: ' + self.nome, bg=self.sidebar_color, font=self.fonte_menor)
+            img_name.place(x=60, y=25, anchor="w")
 
-        self.idade = str(self.idade)
-        # CARACTERISTICAS MEDICO
-        idade_usuario = tkinter.Label(self.container, text='Idade: ' + self.idade, bg=self.sidebar_color,
-                                      font=self.fonte_menor)
-        idade_usuario.place(x=60, y=50, anchor="w")
+            self.idade = str(self.idade)
+            # CARACTERISTICAS PACIENTE
+            idade_usuario = tkinter.Label(self.container, text='Idade: ' + self.idade, bg=self.sidebar_color,
+                                          font=self.fonte_menor)
+            idade_usuario.place(x=60, y=50, anchor="w")
 
-        sintomas_usuario = tkinter.Label(self.container, text='Sintomas: ' + self.sintomas, bg=self.sidebar_color,
-                                         font=self.fonte_menor)
-        sintomas_usuario.place(x=60, y=75, anchor="w")
+            sintomas_usuario = tkinter.Label(self.container, text='Sintomas: ' + self.sintomas, bg=self.sidebar_color,
+                                             font=self.fonte_menor)
+            sintomas_usuario.place(x=60, y=75, anchor="w")
 
-        # BOTÃO ACEITAR A CONSULTA
-        botao_aceitar = tkinter.Button(self.container, text='Aceitar', height=1, width=5, bg=self.selectionbar_color)
-        botao_aceitar.place(x=250, y=270)
+            # BOTÃO ACEITAR A CONSULTA
+            botao_aceitar = tkinter.Button(self.container, text='Aceitar', height=1, width=5, bg=self.selectionbar_color)
+            botao_aceitar.place(x=250, y=270)
 
         if self.quantidade > 1 and self.iterador < self.quantidade:
             # BOTÃO PROXIMO
@@ -91,8 +96,8 @@ class JanelaContainerMedico(JanelaPadrao):
                                          command=self.botaoproxpressionado)
             self.next_button.place(x=470, y=270)
         else:
-            self.next_button.destroy()
-
+            if hasattr(self, 'next_button') and self.next_button:
+                self.next_button.destroy()
     def botaoproxpressionado(self):
 
         # SELF.VAR SERVE PARA TROCAR DE TELAS QUANDO CLICADO EM PRÓXIMO

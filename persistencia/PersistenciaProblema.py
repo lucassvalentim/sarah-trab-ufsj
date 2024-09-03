@@ -41,8 +41,8 @@ class PersistenciaProblema(Persistencia):
             row = rows[0]
             return Problema(*row)
 
-    def pesquisar_problema_nome(self, nome):
-        condition = f"nome LIKE '%{nome}%'"
+    def pesquisar_problema_cpf(self, cpf):
+        condition = f"cpf = '%{cpf}%'"
         rows = self.fetch('Problema', ['id', 'cpf', 'sintomas'], condition)
         return [Problema(*row) for row in rows]
 

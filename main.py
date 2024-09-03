@@ -4,6 +4,8 @@ from persistencia.PersistenciaPaciente import PersistenciaPaciente
 from persistencia.PersistenciaProblema import PersistenciaProblema
 from visao.JanelaLogin import JanelaLogin
 from tkinter import *
+from controle.ControleConsulta import ControleConsulta
+from persistencia.PersistenciaConsulta import PersistenciaConsulta
 
 from visao.visaopaciente import Visaopaciente
 from visao.visaoproblema import Visaoproblema
@@ -14,20 +16,33 @@ from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalS
 
 master = Tk()
 
-pps = PersistenciaProfissionalSaude('profissionais.db')
-pp = PersistenciaPaciente('pacientes.db')
-cps = ControleProfissionalSaude(pps)
-cp = ControlePaciente(pp)
-vps = Visaoprofissional(cps)
-vp = Visaopaciente(cp)
+persistenciaProfissionalSaude = PersistenciaProfissionalSaude('profissionais.db')
+persistenciaPaciente = PersistenciaPaciente('pacientes.db')
+controleProfissionalSaude = ControleProfissionalSaude(persistenciaProfissionalSaude)
+controlePaciente = ControlePaciente(persistenciaPaciente)
+visaoProfissionalSaude = Visaoprofissional(controleProfissionalSaude)
+visaoPaciente = Visaopaciente(controlePaciente)
 
-prob = PersistenciaProblema('problemas.db')
-cprob = ControleProblema(prob)
-vprob = Visaoproblema(cprob)
+persistenciaProblema = PersistenciaProblema('problemas.db')
+controleProblema = ControleProblema(persistenciaProblema)
+visaoProblema = Visaoproblema(controleProblema)
 
-jan = JanelaLogin(master, vp, vps, cp, pp, cps, pps, prob, cprob, vprob)
+persistenciaConsulta = PersistenciaConsulta('consulta.db', persistenciaPaciente, persistenciaProfissionalSaude)
+controleConsulta = ControleConsulta(persistenciaConsulta)
+
+jan = JanelaLogin(
+    master=master,
+    visaopaciente=visaoPaciente,
+    controlepaciente=controlePaciente,
+    visaomedico=visaoProfissionalSaude,
+    controlemedico=controleProfissionalSaude,
+    controleConsulta=controleConsulta,
+    visaoproblema=visaoProblema,
+    controleproblema=controleProblema
+)
+
 master.mainloop()
-for i in pps.carregar_profissionais():
+for i in persistenciaProfissionalSaude.carregar_profissionais():
     print(i)
-for i in pp.carregar_pacientes():
+for i in persistenciaPaciente.carregar_pacientes():
     print(i)

@@ -8,18 +8,17 @@ from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
 
 class JanelaContainerPaciente(JanelaPadrao):
-    def __init__(self, master, visaomedico: Visaoprofissional, persistenciamedico: PersistenciaProfissionalSaude,
-                 controlemedico: ControleProfissionalSaude, persistenciaproblema: PersistenciaProblema,
-                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
+    def __init__(self, master, visaoproblema: Visaoproblema,
+                 controleproblema: ControleProblema,
+                 controleProfissionalSaude:ControleProfissionalSaude):
         super().__init__(master)
+
+        self.controleProfissionalSaude = controleProfissionalSaude
 
         # INICIALIZA OS ATRIBUTOS FIXOS DA TELA
 
         self.iterador = 1
         self.quantidade = 0
-        self.visaomedico = visaomedico
-        self.persistenciamedico = persistenciamedico
-        self.controlemedico = controlemedico
 
         self.nome = None
         self.idade = None
@@ -41,13 +40,15 @@ class JanelaContainerPaciente(JanelaPadrao):
         self.quantidademedicos()
 
     def quantidademedicos(self):
-        row = self.persistenciamedico.carregar_profissionais()
+        row = self.controleProfissionalSaude.carregar()
         for info in row:
             self.quantidade += 1
         return self.carregarinformacoes()
 
     def carregarinformacoes(self):
-        row = self.persistenciamedico.carregar_profissionais()
+        for widget in self.container.winfo_children():
+            widget.destroy()
+        row = self.controleProfissionalSaude.carregar()
         for info in row:
             if info.id == self.iterador:
                 self.nome = info.nome
@@ -67,6 +68,8 @@ class JanelaContainerPaciente(JanelaPadrao):
     def telamedico(self):
 
         # NOME CLIENTE
+        if self.nome is None:
+            self.nome = "Nome não disponível"
         img_name = tkinter.Label(self.container, text='Nome: ' + self.nome, bg=self.sidebar_color,
                                  font=self.fonte_menor)
         img_name.place(x=60, y=25, anchor="w")
@@ -77,29 +80,42 @@ class JanelaContainerPaciente(JanelaPadrao):
                                       font=self.fonte_menor)
         idade_usuario.place(x=60, y=50, anchor="w")
 
+        if self.especializacao is None:
+            self.especializacao = "Especialização indisponível"
         especializacao_usuario = tkinter.Label(self.container, text='Especializacao: ' + self.especializacao,
                                                bg=self.sidebar_color,
                                                font=self.fonte_menor)
         especializacao_usuario.place(x=60, y=75, anchor="w")
 
+        if self.crm is None:
+            self.crm = "CRM indisponível"
         crm_usuario = tkinter.Label(self.container, text='CRM: ' + self.crm, bg=self.sidebar_color,
                                     font=self.fonte_menor)
         crm_usuario.place(x=60, y=100, anchor="w")
 
+        if self.formacao is None:
+            self.formacao = "Formação indisponível"
         formacao_usuario = tkinter.Label(self.container, text='Formação: ' + self.formacao, bg=self.sidebar_color,
                                          font=self.fonte_menor)
         formacao_usuario.place(x=60, y=125, anchor="w")
 
+        if self.tempoatividade is None:
+            self.tempoatividade = "Tempo atividade indisponível"
         tempo_usuario = tkinter.Label(self.container, text='Tempo de Atividade: ' + self.tempoatividade,
                                       bg=self.sidebar_color,
                                       font=self.fonte_menor)
         tempo_usuario.place(x=60, y=150, anchor="w")
 
+        if self.convenios is None:
+            self.convenios = "Convênio indisponível"
         convenios_usuario = tkinter.Label(self.container, text='Convênios: ' + self.convenios, bg=self.sidebar_color,
                                           font=self.fonte_menor)
         convenios_usuario.place(x=60, y=175, anchor="w")
 
-        self.valorconsulta = str(self.valorconsulta)
+        if self.valorconsulta is None:
+            self.valorconsulta = "Valor de consulta indisponível"
+        else:
+            self.valorconsulta = str(self.valorconsulta)
 
         valor_usuario = tkinter.Label(self.container, text='Valor da consuta: ' + self.valorconsulta,
                                       bg=self.sidebar_color,
@@ -113,11 +129,20 @@ class JanelaContainerPaciente(JanelaPadrao):
         if self.quantidade > 1 and self.iterador < self.quantidade:
             # BOTÃO PROXIMO
             print('entrou no botao prox pressionado')
-            self.next_button = tkinter.Button(self.container, text='Próximo', height=1, width=5, bg=self.selectionbar_color,
-                                         command=self.botaoproxpressionado)
+            self.next_button = tkinter.Button(self.container, text='Próximo', height=1, width=5,
+                                              bg=self.selectionbar_color,
+                                              command=self.botaoproxpressionado)
             self.next_button.place(x=470, y=270)
         else:
-            self.next_button.destroy()
+            self.next_button = None
+
+        if self.iterador > 1:
+            self.anterior_button = tkinter.Button(self.container, text='Anterior', height=1, width=5,
+                                                  bg=self.selectionbar_color,
+                                                  command=self.botaoanteriorpressionado)
+            self.anterior_button.place(x=50, y=270)
+        else:
+            self.anterior_button = None
 
     def botaoproxpressionado(self):
 
@@ -137,7 +162,8 @@ class JanelaContainerPaciente(JanelaPadrao):
         self.iterador -= 1
         self.carregarinformacoes()
         if self.iterador == 1:
-            self.anterior_button.destroy()
+            if self.anterior_button is not None:
+                self.anterior_button.destroy()
         else:
             self.anterior_button = tkinter.Button(self.container, text='Anterior', height=1, width=5,
                                              bg=self.selectionbar_color,

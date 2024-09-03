@@ -16,22 +16,18 @@ from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
 
 class JanelaHomePaciente(JanelaPadrao):
-    def __init__(self, master, cpf, persistencia: PersistenciaPaciente, controle: ControlePaciente, visao: Visaopaciente, visaomedico: Visaoprofissional,
-                 persistenciamedico: PersistenciaProfissionalSaude, controlemedico: ControleProfissionalSaude, persistenciaproblema: PersistenciaProblema,
-                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
+    def __init__(self, master, cpf, visao: Visaopaciente, visaoproblema: Visaoproblema, controlePaciente:ControlePaciente,
+                 controlemedico: ControleProfissionalSaude, controleproblema: ControleProblema):
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
-        self.tipo = 2
         self.visaopaciente = visao
-        self.controlepaciente = controle
-        self.persistenciapaciente = persistencia
-        self.visaomedico = visaomedico
-        self.persistenciamedico = persistenciamedico
-        self.controlemedico = controlemedico
-        self.persistenciaproblema = persistenciaproblema
-        self.controleproblema = controleproblema
         self.visaoproblema = visaoproblema
+        self.controlemedico = controlemedico
+        self.controlePaciente = controlePaciente
+        self.controleproblema = controleproblema
+
+        self.tipo = 2
 
         self.nome = None
 
@@ -45,7 +41,7 @@ class JanelaHomePaciente(JanelaPadrao):
         self.carregarinformacoes()
 
     def carregarinformacoes(self):
-        row = self.persistenciapaciente.carregar_pacientes()
+        row = self.controlePaciente.carregar()
         n = ""
         for info in row:
             if self.cpf_valor == info.cpf:
@@ -71,8 +67,12 @@ class JanelaHomePaciente(JanelaPadrao):
         img_color = '#FCFCFC'
 
         # if self.var == 0:
-        JanelaContainerPaciente(self.master, self.visaomedico, self.persistenciamedico, self.controlemedico, self.persistenciaproblema,
-                                self.controleproblema, self.visaoproblema)
+        JanelaContainerPaciente(
+            master=self.master,
+            controleproblema=self.controleproblema,
+            visaoproblema=self.visaoproblema,
+            controleProfissionalSaude= self.controlemedico
+        )
 
         # SIDEBAR
         sidebar = tkinter.Frame(self.master, bg=sidebar_color)
@@ -111,7 +111,7 @@ class JanelaHomePaciente(JanelaPadrao):
         self.master.quit()
 
     def Excluirperfil(self):
-        row = self.persistenciapaciente.carregar_pacientes()
+        row = self.controlePaciente.carregar()
         id = 0
         print(self.cpf_valor)
         for info in row:

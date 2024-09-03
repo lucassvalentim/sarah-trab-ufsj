@@ -13,26 +13,23 @@ from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalS
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
+from controle.ControleConsulta import ControleConsulta
 
 class JanelaRegistro(JanelaPadrao):
-    def __init__(self, master, visaopaciente: Visaopaciente, visaomedico: Visaoprofissional,
-                 controlepaciente: ControlePaciente,
-                 persistenciapaciente: PersistenciaPaciente, controlemedico: ControleProfissionalSaude,
-                 persitenciamedico: PersistenciaProfissionalSaude, persistenciaproblema: PersistenciaProblema,
-                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
+    def __init__(self, master, visaopaciente: Visaopaciente, controlepaciente: ControlePaciente,
+                 visaomedico: Visaoprofissional, controlemedico: ControleProfissionalSaude,
+                 controleConsulta: ControleConsulta, visaoproblema: Visaoproblema, controleproblema: ControleProblema):
 
         super().__init__(master)
         self.master = master
         self.cpf_valor = None
         self.visaopaciente = visaopaciente
-        self.visaomedico = visaomedico
         self.controlepaciente = controlepaciente
-        self.persistenciapaciente = persistenciapaciente
+        self.visaomedico = visaomedico
         self.controlemedico = controlemedico
-        self.persistenciamedico = persitenciamedico
-        self.persistenciaproblema = persistenciaproblema
-        self.controleproblema = controleproblema
+        self.controleConsulta = controleConsulta
         self.visaoproblema = visaoproblema
+        self.controleproblema = controleproblema
 
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Cadastro")
@@ -102,11 +99,24 @@ class JanelaRegistro(JanelaPadrao):
     def camposPaciente(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaRegistroPaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente, self.visaopaciente,
-                               self.visaomedico, self.persistenciamedico, self.controlemedico, self.persistenciaproblema,
-                               self.controleproblema, self.visaoproblema)
+        JanelaRegistroPaciente(
+            master=self.master,
+            cpf=self.cpf_valor,
+            visao=self.visaopaciente,
+            controle=self.controlepaciente,
+            controlemedico=self.controlemedico,
+            visaoproblema=self.visaoproblema,
+            controleproblema=self.controleproblema
+        )
 
     def camposProfissional(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaRegistroMedico(self.master, self.cpf_valor, self.persistenciamedico, self.controlemedico, self.visaomedico)
+        JanelaRegistroMedico(
+            master=self.master,
+            cpf=self.cpf_valor,
+            visao=self.visaomedico,
+            controle=self.controlemedico,
+            controleConsulta=self.controleConsulta,
+            controleProblema=self.controleproblema
+        )

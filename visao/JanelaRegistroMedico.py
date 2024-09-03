@@ -9,17 +9,19 @@ from visao.JanelaHomeMedico import JanelaHomeMedico
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-
+from controle.ControleConsulta import ControleConsulta
+from controle.ControleProblema import ControleProblema
 
 class JanelaRegistroMedico(JanelaPadrao):
-    def __init__(self, master, cpf, persistencia: PersistenciaProfissionalSaude, controle: ControleProfissionalSaude,
-                 visao: Visaoprofissional):
+    def __init__(self, master, cpf, visao: Visaoprofissional, controle: ControleProfissionalSaude,
+                controleConsulta:ControleConsulta, controleProblema:ControleProblema):
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
-        self.persistencia = persistencia
         self.controle = controle
         self.visao = visao
+        self.controleConsulta = controleConsulta
+        self.controleProblema = controleProblema
 
         # TODO: deixar bonitinho o título(colocar logo)
         self.master.title("Cadastro Medico")
@@ -155,4 +157,11 @@ class JanelaRegistroMedico(JanelaPadrao):
     def configurarJanelaHome(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaHomeMedico(self.master, self.cpf_valor, self.persistencia, self.controle, self.visao)
+        JanelaHomeMedico(
+            master=self.master,
+            cpf=self.cpf_valor,
+            visao=self.visao,
+            controle=self.controle,
+            controleConsulta=self.controleConsulta,
+            controleProblema=self.controleProblema
+        )

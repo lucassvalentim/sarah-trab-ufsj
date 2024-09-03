@@ -14,26 +14,21 @@ from persistencia.PersistenciaPaciente import PersistenciaPaciente
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
-
+from controle.ControleConsulta import ControleConsulta
 
 class JanelaLogin(JanelaPadrao):
-    def __init__(self, master, visaopaciente: Visaopaciente, visaomedico: Visaoprofissional,
-                 controlepaciente: ControlePaciente,
-                 persistenciapaciente: PersistenciaPaciente, controlemedico: ControleProfissionalSaude,
-                 persitenciamedico: PersistenciaProfissionalSaude, persistenciaproblema: PersistenciaProblema,
-                 controleproblema: ControleProblema, visaoproblema: Visaoproblema
-                 ):
+    def __init__(self, master, visaopaciente: Visaopaciente, controlepaciente: ControlePaciente, visaomedico: Visaoprofissional,
+                 controlemedico: ControleProfissionalSaude, controleConsulta : ControleConsulta, visaoproblema: Visaoproblema,
+                 controleproblema: ControleProblema):
 
         super().__init__(master)
         self.master = master
         self.visaopaciente = visaopaciente
         self.visaomedico = visaomedico
         self.controlepaciente = controlepaciente
-        self.persistenciapaciente = persistenciapaciente
         self.controlemedico = controlemedico
-        self.persistenciamedico = persitenciamedico
-        self.persistenciaproblema = persistenciaproblema
         self.controleproblema = controleproblema
+        self.controleconsulta = controleConsulta
         self.visaoproblema = visaoproblema
 
         self.cpf_valor = None
@@ -86,11 +81,16 @@ class JanelaLogin(JanelaPadrao):
     def configurarJanelaRegistro(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaRegistro(self.master, self.visaopaciente, self.visaomedico,
-                       self.controlepaciente,
-                       self.persistenciapaciente, self.controlemedico,
-                       self.persistenciamedico, self.persistenciaproblema,
-                       self.controleproblema, self.visaoproblema)
+        JanelaRegistro(
+            master=self.master,
+            visaopaciente=self.visaopaciente,
+            controlepaciente=self.controlepaciente,
+            visaomedico=self.visaomedico,
+            controlemedico=self.controlemedico,
+            controleConsulta=self.controleconsulta,
+            visaoproblema=self.visaoproblema,
+            controleproblema=self.controleproblema
+        )
 
     #TODO: INVERTI A TELA DE MEDICO E PACIENTE NA PARTE DE MOSTRAR OS CARDS, ARRUMAR
 
@@ -98,7 +98,7 @@ class JanelaLogin(JanelaPadrao):
     def configurarJanelaHome(self):
         self.cpf_valor = self.entry_cpf.get()
         tipo = 0
-        row = self.persistenciapaciente.carregar_pacientes()
+        row = self.controlepaciente.carregar()
         for info in row:
             if self.cpf_valor == info.cpf:
                 tipo = 1
@@ -107,14 +107,24 @@ class JanelaLogin(JanelaPadrao):
         if tipo == 1:
             for widget in self.master.winfo_children():
                 widget.destroy()
-            JanelaHomePaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente,
-                               self.visaopaciente, self.visaomedico,
-                               self.persistenciamedico, self.controlemedico, self.persistenciaproblema,
-                               self.controleproblema, self.visaoproblema)
+            JanelaHomePaciente(
+                master=self.master,
+                cpf=self.cpf_valor,
+                visao=self.visaopaciente,
+                visaoproblema=self.visaoproblema,
+                controlePaciente=self.controlepaciente,
+                controlemedico=self.controlemedico,
+                controleproblema=self.controleproblema
+            )
 
         else:
             for widget in self.master.winfo_children():
                 widget.destroy()
-            JanelaHomeMedico(self.master, self.cpf_valor, self.persistenciamedico, self.controlemedico,
-                             self.visaomedico, self.persistenciapaciente, self.controlepaciente, self.visaopaciente,
-                             self.persistenciaproblema, self.controleproblema, self.visaoproblema)
+            JanelaHomeMedico(
+                master=self.master,
+                cpf=self.cpf_valor,
+                visao=self.visaomedico,
+                controle=self.controlemedico,
+                controleConsulta=self.controleconsulta,
+                controleProblema=self.controleproblema
+            )

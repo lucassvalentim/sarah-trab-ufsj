@@ -16,19 +16,16 @@ from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 
 class JanelaRegistroPaciente(JanelaPadrao):
-    def __init__(self, master, cpf, persistencia: PersistenciaPaciente, controle: ControlePaciente, visao: Visaopaciente, visaomedico: Visaoprofissional,
-                 persistenciamedico: PersistenciaProfissionalSaude, controlemedico: ControleProfissionalSaude, persistenciaproblema: PersistenciaProblema,
-                 controleproblema: ControleProblema, visaoproblema: Visaoproblema):
+    def __init__(self, master, cpf,  visao: Visaopaciente, controle: ControlePaciente,
+                 controlemedico: ControleProfissionalSaude, visaoproblema: Visaoproblema,
+                 controleproblema: ControleProblema):
+
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
         self.visaopaciente = visao
         self.controlepaciente = controle
-        self.persistenciapaciente = persistencia
-        self.visaomedico = visaomedico
-        self.persistenciamedico = persistenciamedico
         self.controlemedico = controlemedico
-        self.persistenciaproblema = persistenciaproblema
         self.controleproblema = controleproblema
         self.visaoproblema = visaoproblema
 
@@ -136,5 +133,12 @@ class JanelaRegistroPaciente(JanelaPadrao):
     def configurarJanelaHome(self):
         for widget in self.master.winfo_children():
             widget.destroy()
-        JanelaHomePaciente(self.master, self.cpf_valor, self.persistenciapaciente, self.controlepaciente, self.visaopaciente, self.visaomedico,
-                           self.persistenciamedico, self.controlemedico, self.persistenciaproblema, self.controleproblema, self.visaoproblema)
+        JanelaHomePaciente(
+            master=self.master,
+            cpf=self.cpf_valor,
+            visao=self.visaopaciente,
+            visaoproblema=self.visaoproblema,
+            controlePaciente=self.controlepaciente,
+            controlemedico=self.controlemedico,
+            controleproblema=self.controleproblema
+        )

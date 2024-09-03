@@ -1,9 +1,10 @@
 from modelo.Consulta import Consulta
 from datetime import datetime
+from persistencia.PersistenciaConsulta import PersistenciaConsulta
 
 class ControleConsulta:
 
-    def __init__(self, persistencia):
+    def __init__(self, persistencia:PersistenciaConsulta):
         self.persistencia = persistencia
 
     def modificar(self, id, modificacoes):
@@ -17,9 +18,11 @@ class ControleConsulta:
     def inserir(self, consulta: Consulta):
         self.persistencia.inserir_consulta(consulta)
 
-    def pesquisar(self, id=None):
-        if id is not None:
-            return self.persistencia.pesquisar_consulta_id(id)
+    def pesquisar(self, id_consulta=None, id_medico=None):
+        if id_consulta is not None:
+            return self.persistencia.pesquisar_consulta_id(id_consulta)
+        if id_medico is not None:
+            return self.persistencia.pesquisar_profissional_id(id_medico)
         return None
 
     def carregar(self):
