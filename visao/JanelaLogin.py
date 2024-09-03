@@ -114,7 +114,8 @@ class JanelaLogin(JanelaPadrao):
                 visaoproblema=self.visaoproblema,
                 controlePaciente=self.controlepaciente,
                 controlemedico=self.controlemedico,
-                controleproblema=self.controleproblema
+                controleproblema=self.controleproblema,
+                controleConsulta=self.controleconsulta
             )
 
         else:

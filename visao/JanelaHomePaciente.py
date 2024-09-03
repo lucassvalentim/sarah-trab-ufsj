@@ -15,10 +15,11 @@ from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
 from visao.JanelaEditarSintomas import JanelaEditarSintomas
+from controle.ControleConsulta import ControleConsulta
 
 class JanelaHomePaciente(JanelaPadrao):
     def __init__(self, master, cpf, visao: Visaopaciente, visaoproblema: Visaoproblema, controlePaciente:ControlePaciente,
-                 controlemedico: ControleProfissionalSaude, controleproblema: ControleProblema):
+                 controlemedico: ControleProfissionalSaude, controleproblema: ControleProblema, controleConsulta:ControleConsulta):
         super().__init__(master)
         self.master = master
         self.cpf_valor = cpf
@@ -27,6 +28,7 @@ class JanelaHomePaciente(JanelaPadrao):
         self.controlemedico = controlemedico
         self.controlePaciente = controlePaciente
         self.controleproblema = controleproblema
+        self.controleConsulta = controleConsulta
 
         self.tipo = 2
 
@@ -69,10 +71,13 @@ class JanelaHomePaciente(JanelaPadrao):
 
         # if self.var == 0:
         JanelaContainerPaciente(
+            cpf=self.cpf_valor,
             master=self.master,
             controleproblema=self.controleproblema,
             visaoproblema=self.visaoproblema,
-            controleProfissionalSaude= self.controlemedico
+            controleProfissionalSaude= self.controlemedico,
+            controlePaciente=self.controlePaciente,
+            controleConsulta=self.controleConsulta
         )
 
         # SIDEBAR

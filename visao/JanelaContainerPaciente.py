@@ -1,4 +1,8 @@
 import tkinter
+from tkinter import CENTER, FLAT
+
+from datetime import datetime
+
 from visao.JanelaPadrao import JanelaPadrao
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
@@ -6,15 +10,20 @@ from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalS
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 from persistencia.PersistenciaProblema import PersistenciaProblema
+from modelo.Consulta import Consulta
+from controle.ControlePaciente import ControlePaciente
+from controle.ControleConsulta import ControleConsulta
 
 class JanelaContainerPaciente(JanelaPadrao):
-    def __init__(self, master, visaoproblema: Visaoproblema,
-                 controleproblema: ControleProblema,
-                 controleProfissionalSaude:ControleProfissionalSaude):
+    def __init__(self, master, cpf, visaoproblema: Visaoproblema,
+                 controleproblema: ControleProblema, controlePaciente : ControlePaciente,
+                 controleProfissionalSaude:ControleProfissionalSaude, controleConsulta:ControleConsulta):
         super().__init__(master)
 
         self.controleProfissionalSaude = controleProfissionalSaude
-
+        self.controlePaciente = controlePaciente
+        self.controleConsulta = controleConsulta
+        self.cpf = cpf
         # INICIALIZA OS ATRIBUTOS FIXOS DA TELA
 
         self.iterador = 1
@@ -123,7 +132,8 @@ class JanelaContainerPaciente(JanelaPadrao):
         valor_usuario.place(x=60, y=200, anchor="w")
 
         # BOTÃO CURTIR
-        curtir_button = tkinter.Button(self.container, text='Agendar', height=1, width=5, bg=self.selectionbar_color)
+        curtir_button = tkinter.Button(self.container, text='Agendar', height=1, width=5, bg=self.selectionbar_color,
+                                       command=self.botaoagendarpressionado)
         curtir_button.place(x=250, y=270)
 
         if self.quantidade > 1 and self.iterador < self.quantidade:
@@ -160,3 +170,70 @@ class JanelaContainerPaciente(JanelaPadrao):
                                              bg=self.selectionbar_color,
                                              command=self.botaoanteriorpressionado)
             self.anterior_button.place(x=50, y=270)
+
+    def botaoagendarpressionado(self):
+        secondary_window = tkinter.Toplevel()
+        secondary_window.resizable(0, 0)
+        secondary_window.title("Agendamento")
+        secondary_window.config(width=300, height=220, bg=self.sidebar_color)
+
+        # Label e campo de entrada para o dia
+        label_dia = tkinter.Label(secondary_window, text="Dia:", bg=self.sidebar_color, font=self.fonte_menor)
+        label_dia.place(x=20, y=20, anchor="w")
+        entry_dia = tkinter.Entry(secondary_window)
+        entry_dia.place(x=100, y=20, anchor="w")
+
+        # Label e campo de entrada para o horário
+        label_horario = tkinter.Label(secondary_window, text="Horário:", bg=self.sidebar_color, font=self.fonte_menor)
+        label_horario.place(x=20, y=60, anchor="w")
+        entry_horario = tkinter.Entry(secondary_window)
+        entry_horario.place(x=100, y=60, anchor="w")
+
+        def confirmar_agendamento():
+            dia = entry_dia.get()  # Captura o valor digitado no campo "dia"
+            horario = entry_horario.get()  # Captura o valor digitado no campo "horário"
+
+            # Concatena a data e o horário e converte para datetime
+            data_horario_str = f"{dia} {horario}"
+            data_horario = datetime.now()
+            try:
+                data_horario = datetime.strptime(data_horario_str, "%d/%m/%Y %H:%M")
+                print(f"Data e Horário: {data_horario}")
+                # Aqui você pode adicionar lógica para salvar ou processar o objeto datetime
+            except ValueError:
+                print("Formato de data ou horário inválido!")
+
+            profissional = self.controleProfissionalSaude.pesquisar(id=self.iterador)
+            paciente = self.controlePaciente.pesquisar(cpf=self.cpf)
+            consulta = Consulta(
+                id=0,
+                profissional=profissional,
+                paciente=paciente,
+                valor=profissional.precoConsulta,
+                data_horario=data_horario
+            )
+
+            self.controleConsulta.inserir(consulta)
+            secondary_window.destroy()
+
+
+        # Botão para confirmar o agendamento
+        button_confirmar = tkinter.Button(
+            secondary_window,
+            text="Confirmar",
+            font=self.fonte_menor,
+            command=confirmar_agendamento,
+            bg=self.selectionbar_color
+        )
+        button_confirmar.place(x=100, y=100, anchor="w")
+
+        # Botão para destruir a janela
+        button_close = tkinter.Button(
+            secondary_window,
+            text="Cancelar",
+            font=self.fonte_menor,
+            command=secondary_window.destroy,
+            bg=self.selectionbar_color
+        )
+        button_close.place(x=100, y=140, anchor="w")
+
