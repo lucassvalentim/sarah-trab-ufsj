@@ -95,9 +95,7 @@ class JanelaContainerMedico(JanelaPadrao):
             self.next_button = tkinter.Button(self.container, text='Próximo', height=1, width=5, bg=self.selectionbar_color,
                                          command=self.botaoproxpressionado)
             self.next_button.place(x=470, y=270)
-        else:
-            if hasattr(self, 'next_button') and self.next_button:
-                self.next_button.destroy()
+
     def botaoproxpressionado(self):
 
         # SELF.VAR SERVE PARA TROCAR DE TELAS QUANDO CLICADO EM PRÓXIMO

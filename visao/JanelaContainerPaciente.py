@@ -133,16 +133,7 @@ class JanelaContainerPaciente(JanelaPadrao):
                                               bg=self.selectionbar_color,
                                               command=self.botaoproxpressionado)
             self.next_button.place(x=470, y=270)
-        else:
-            self.next_button = None
 
-        if self.iterador > 1:
-            self.anterior_button = tkinter.Button(self.container, text='Anterior', height=1, width=5,
-                                                  bg=self.selectionbar_color,
-                                                  command=self.botaoanteriorpressionado)
-            self.anterior_button.place(x=50, y=270)
-        else:
-            self.anterior_button = None
 
     def botaoproxpressionado(self):
 
