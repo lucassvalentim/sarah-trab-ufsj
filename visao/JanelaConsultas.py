@@ -11,14 +11,6 @@ class JanelaConsultas(JanelaPadrao):
         self.secondary_window.resizable(0, 0)
         self.secondary_window.title("Consultas")
         self.secondary_window.config(width=600, height=450, bg=self.sidebar_color)
-        # self.button_close = tkinter.Button(
-        #     self.secondary_window,
-        #     text="Fechar",
-        #     command=self.secondary_window.destroy,
-        #     bg=self.selectionbar_color
-        #
-        # )
-        # self.button_close.place(x=490, y=450)
 
         # INICIALIZANDO A CONFIGURAÇÃO DOS CONTAINERS COM AS INFORMAÇÕES
         self.container_agendadas = tkinter.Frame(self.secondary_window, bg=self.sidebar_color)
@@ -34,9 +26,6 @@ class JanelaConsultas(JanelaPadrao):
         self.configurarjanelacurtir()
 
     def configurarjanelacurtir(self):
-        # if self.tipo == 1:
-        #     self.telapaciente()
-        # elif self.tipo == 2:
         self.telamedico()
 
     def telamedico(self):
