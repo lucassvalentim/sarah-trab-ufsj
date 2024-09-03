@@ -8,11 +8,11 @@ from visao.visaopaciente import Visaopaciente
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControlePaciente import ControlePaciente
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from persistencia.PacienteDAO import PacienteDAO
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
-from persistencia.PersistenciaProblema import PersistenciaProblema
+from persistencia.ProblemaDAO import ProblemaDAO
 from controle.ControleConsulta import ControleConsulta
 
 class JanelaRegistro(JanelaPadrao):

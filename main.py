@@ -1,33 +1,33 @@
 from controle.ControlePaciente import ControlePaciente
 from controle.ControleProblema import ControleProblema
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
-from persistencia.PersistenciaProblema import PersistenciaProblema
+from persistencia.PacienteDAO import PacienteDAO
+from persistencia.ProblemaDAO import ProblemaDAO
 from visao.JanelaLogin import JanelaLogin
 from tkinter import *
 from controle.ControleConsulta import ControleConsulta
-from persistencia.PersistenciaConsulta import PersistenciaConsulta
+from persistencia.ConsultaDAO import ConsultaDAO
 
 from visao.visaopaciente import Visaopaciente
 from visao.visaoproblema import Visaoproblema
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
 
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
 
 master = Tk()
 
-persistenciaProfissionalSaude = PersistenciaProfissionalSaude('profissionais.db')
-persistenciaPaciente = PersistenciaPaciente('pacientes.db')
+persistenciaProfissionalSaude = ProfissionalSaudeDAO('profissionais.db')
+persistenciaPaciente = PacienteDAO('pacientes.db')
 controleProfissionalSaude = ControleProfissionalSaude(persistenciaProfissionalSaude)
 controlePaciente = ControlePaciente(persistenciaPaciente)
 visaoProfissionalSaude = Visaoprofissional(controleProfissionalSaude)
 visaoPaciente = Visaopaciente(controlePaciente)
 
-persistenciaProblema = PersistenciaProblema('problemas.db')
+persistenciaProblema = ProblemaDAO('problemas.db')
 controleProblema = ControleProblema(persistenciaProblema)
 visaoProblema = Visaoproblema(controleProblema)
 
-persistenciaConsulta = PersistenciaConsulta('consulta.db', persistenciaPaciente, persistenciaProfissionalSaude)
+persistenciaConsulta = ConsultaDAO('consulta.db', persistenciaPaciente, persistenciaProfissionalSaude)
 controleConsulta = ControleConsulta(persistenciaConsulta)
 
 jan = JanelaLogin(

@@ -6,10 +6,10 @@ from datetime import datetime
 from visao.JanelaPadrao import JanelaPadrao
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
-from persistencia.PersistenciaProblema import PersistenciaProblema
+from persistencia.ProblemaDAO import ProblemaDAO
 from modelo.Consulta import Consulta
 from controle.ControlePaciente import ControlePaciente
 from controle.ControleConsulta import ControleConsulta

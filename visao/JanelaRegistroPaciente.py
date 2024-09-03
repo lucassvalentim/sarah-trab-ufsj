@@ -7,11 +7,11 @@ from visao.JanelaErro import JanelaErro
 from visao.JanelaHomePaciente import JanelaHomePaciente
 from visao.visaopaciente import Visaopaciente
 from controle.ControlePaciente import ControlePaciente
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from persistencia.PacienteDAO import PacienteDAO
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-from persistencia.PersistenciaProblema import PersistenciaProblema
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
+from persistencia.ProblemaDAO import ProblemaDAO
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
 

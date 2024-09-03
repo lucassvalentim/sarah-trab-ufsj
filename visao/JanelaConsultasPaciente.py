@@ -1,11 +1,16 @@
 import tkinter
 from visao.JanelaPadrao import JanelaPadrao
-
-
+from controle.ControlePaciente import ControlePaciente
+from controle.ControleConsulta import ControleConsulta
 class JanelaConsultasPaciente(JanelaPadrao):
-    def __init__(self, master):
+    def __init__(self, master, cpf, controlePaciente: ControlePaciente, controleConsulta: ControleConsulta):
         super().__init__(master)
 
+        self.var_um = 0
+
+        self.cpf_valor = cpf
+        self.controlePaciente = controlePaciente
+        self.controleConsulta = controleConsulta
         # INICIALIZANDO OS ATRIBUTOS DA TELA
         self.secondary_window = tkinter.Toplevel()
         self.secondary_window.resizable(0, 0)
@@ -23,9 +28,22 @@ class JanelaConsultasPaciente(JanelaPadrao):
 
     def telapaciente(self):
         self.consultasagendaspacientes()
-        self.consultasemanalisepacientes()
+        # self.consultasemanalisepacientes()
 
     def consultasagendaspacientes(self):
+        row = self.controlePaciente.carregar()
+        id = 0
+        for info in row:
+            if self.cpf_valor == info.cpf:
+                id = info.id
+                break
+
+        consulta = self.controleConsulta.carregar_por_paciente(paciente_id=id)[0]
+        nome = consulta.profissional.nome
+        date_time = consulta.data_horario
+        especializacao = consulta.profissional.especializacao
+        localizacao = consulta.profissional.localidade
+
         # TÍTULO
         label_agendadas = tkinter.Label(self.secondary_window, text="Consultas Agendadas", foreground="black",
                                         bg=self.sidebar_color, font=self.fonte_menor)
@@ -38,13 +56,13 @@ class JanelaConsultasPaciente(JanelaPadrao):
         consultas_agendadas_um.place(relx=0.0, rely=0.0, relwidth=1, relheight=0.3)
 
         # INFORMAÇÕES DENTRO DO SUBFRAME UM
-        label_nome_um = tkinter.Label(consultas_agendadas_um, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
-                                                                   'Horário: ' + '14:30', foreground="black",
+        label_nome_um = tkinter.Label(consultas_agendadas_um, text="Nome do médico: " + nome + '\t\t\t\t' +
+                                                                   'Data: ' + date_time.strftime("%d/%m/%Y %H:%M"), foreground="black",
                                       bg=self.selectionbar_color, font=self.fonte_menor)
         label_nome_um.place(x=5, y=5)
 
-        label_especialidade_um = tkinter.Label(consultas_agendadas_um, text="Especialização: " + 'Ginecologista'
-                                                                            + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
+        label_especialidade_um = tkinter.Label(consultas_agendadas_um, text="Especialização: " + especializacao
+                                                                            + '\t\t\t' + 'Localização: ' + localizacao,
                                                foreground="black",
                                                bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_um.place(x=5, y=30)
@@ -58,43 +76,6 @@ class JanelaConsultasPaciente(JanelaPadrao):
         )
         botao_prox.place(x=280, y=150)
 
-        # FRAME RESPONSÁVEL PELAS CONSULTAS EM ANÁLISE
-
-    def consultasemanalisepacientes(self):
-        # TÍTULO
-        label_analise = tkinter.Label(self.secondary_window, text="Consultas em análise", foreground="black",
-                                      bg=self.sidebar_color, font=self.fonte_menor)
-        label_analise.place(x=25, y=205)
-
-        # CONFIGURAÇÃO DO SUBFRAME UM
-        consultas_analise_um = tkinter.Frame(self.container_analise, bg=self.selectionbar_color,
-                                             highlightbackground="grey",
-                                             highlightthickness=2)
-        consultas_analise_um.place(relx=0.0, rely=0.0, relwidth=1, relheight=0.3)
-
-        # INFORMAÇÕES DENTRO DO SUBFRAME UM
-        label_nome_um = tkinter.Label(consultas_analise_um, text="Nome do médico: " + 'Rodolfo' + '\t\t\t\t' +
-                                                                 'Horário: ' + '14:30', foreground="black",
-                                      bg=self.selectionbar_color, font=self.fonte_menor)
-        label_nome_um.place(x=5, y=5)
-
-        label_especialidade_um = tkinter.Label(consultas_analise_um, text="Especialização: " + 'Ginecologista'
-                                                                          + '\t\t\t' + 'Localização: ' + 'Belo Horizonte',
-                                               foreground="black",
-                                               bg=self.selectionbar_color, font=self.fonte_menor)
-        label_especialidade_um.place(x=5, y=30)
-
-
-        # BOTAO PROXIMO
-        botao_prox = tkinter.Button(
-            self.container_analise,
-            text=">",
-            command=self.apertoubotaoproxanalise,
-            bg=self.selectionbar_color
-        )
-        botao_prox.place(x=280, y=150)
-
-        # VERIFICA SE APERTOU O BOTÃO PROXIMO, SE SIM CRIA UM BOTÃO ANTERIOR
 
     def apertoubotaoproxagenda(self):
         self.var_um += 1
@@ -105,14 +86,4 @@ class JanelaConsultasPaciente(JanelaPadrao):
             bg=self.selectionbar_color
         )
         botao_ant.place(x=200, y=320)
-
-    def apertoubotaoproxanalise(self):
-        self.var_um += 1
-
-        botao_ant = tkinter.Button(
-            self.container_analise,
-            text="<",
-            bg=self.selectionbar_color
-        )
-        botao_ant.place(x=200, y=150)
 

@@ -1,17 +1,17 @@
 import sqlite3
 from modelo.Consulta import Consulta
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
+from persistencia.PacienteDAO import PacienteDAO
 from datetime import datetime
 
 from persistencia.Persistencia import Persistencia
 
-class PersistenciaConsulta(Persistencia):
+class ConsultaDAO(Persistencia):
     def __init__(
             self, 
             db_name, 
-            persistencia_paciente:PersistenciaPaciente, 
-            persistencia_profissional: PersistenciaProfissionalSaude):
+            persistencia_paciente:PacienteDAO,
+            persistencia_profissional: ProfissionalSaudeDAO):
         super().__init__(db_name)
         create_table_sql = """
         CREATE TABLE IF NOT EXISTS Consulta (

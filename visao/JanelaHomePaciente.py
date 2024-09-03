@@ -7,13 +7,13 @@ from visao.JanelaPadrao import JanelaPadrao
 from visao.JanelaContainerPaciente import JanelaContainerPaciente
 from visao.visaopaciente import Visaopaciente
 from controle.ControlePaciente import ControlePaciente
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from persistencia.PacienteDAO import PacienteDAO
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
-from persistencia.PersistenciaProblema import PersistenciaProblema
+from persistencia.ProblemaDAO import ProblemaDAO
 from visao.JanelaEditarSintomas import JanelaEditarSintomas
 from controle.ControleConsulta import ControleConsulta
 
@@ -117,7 +117,13 @@ class JanelaHomePaciente(JanelaPadrao):
 
     # FUNÇÃO CHAMA A JANELA DE CONSULTAS
     def botaoconsultaspressionado(self):
-        JanelaConsultasPaciente(self.master)
+        # cpf_medico = self.controlemedico.pesquisar()
+        JanelaConsultasPaciente(
+            master=self.master,
+            cpf=self.cpf_valor,
+            controlePaciente=self.controlePaciente,
+            controleConsulta=self.controleConsulta
+        )
 
     # FUNÇÃO FECHA O APP CASO CLIQUE EM SAIR
     def FecharApp(self):

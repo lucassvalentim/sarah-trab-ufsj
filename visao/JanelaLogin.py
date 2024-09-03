@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import *
 from PIL import ImageTk, Image
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
 from visao.JanelaHomeMedico import JanelaHomeMedico
 from visao.JanelaHomePaciente import JanelaHomePaciente
 from visao.JanelaRegistro import JanelaRegistro
@@ -10,10 +10,10 @@ from visao.visaopaciente import Visaopaciente
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControlePaciente import ControlePaciente
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from persistencia.PacienteDAO import PacienteDAO
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
-from persistencia.PersistenciaProblema import PersistenciaProblema
+from persistencia.ProblemaDAO import ProblemaDAO
 from controle.ControleConsulta import ControleConsulta
 
 class JanelaLogin(JanelaPadrao):

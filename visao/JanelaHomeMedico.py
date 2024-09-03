@@ -7,14 +7,14 @@ from visao.JanelaContainerMedico import JanelaContainerMedico
 from visao.JanelaPadrao import JanelaPadrao
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
+from persistencia.PacienteDAO import PacienteDAO
 from controle.ControlePaciente import ControlePaciente
 from visao.visaopaciente import Visaopaciente
-from persistencia.PersistenciaProblema import PersistenciaProblema
+from persistencia.ProblemaDAO import ProblemaDAO
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
-from persistencia.PersistenciaConsulta import PersistenciaConsulta
+from persistencia.ConsultaDAO import ConsultaDAO
 from controle.ControleConsulta import ControleConsulta
 
 class JanelaHomeMedico(JanelaPadrao):
@@ -110,7 +110,13 @@ class JanelaHomeMedico(JanelaPadrao):
 
     # FUNÇÃO CHAMA A JANELA DE CONSULTAS
     def botaoconsultaspressionado(self):
-        JanelaConsultasMedico(self.master)
+        JanelaConsultasMedico(
+            self.master,
+            cpf_valor=self.cpf_valor,
+            controleConsulta=self.controleConsulta,
+            controleMedico=self.controlemedico,
+            controleProblema=self.controleProblema
+        )
 
     def Excluirperfil(self):
         row = self.controlemedico.carregar()

@@ -1,9 +1,12 @@
 import tkinter
 from visao.JanelaPadrao import JanelaPadrao
-
+from controle.ControleProfissionalSaude import ControleProfissionalSaude
+from controle.ControleConsulta import ControleConsulta
+from controle.ControleProblema import ControleProblema
 
 class JanelaConsultasMedico(JanelaPadrao):
-    def __init__(self, master):
+    def __init__(self, master, cpf_valor, controleMedico:ControleProfissionalSaude, controleConsulta:ControleConsulta,
+                 controleProblema: ControleProblema):
         super().__init__(master)
 
         # INICIALIZANDO OS ATRIBUTOS DA TELA
@@ -15,10 +18,27 @@ class JanelaConsultasMedico(JanelaPadrao):
         self.container_agendadas = tkinter.Frame(self.secondary_window, bg=self.sidebar_color)
         self.container_agendadas.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.4)
 
+        self.cpf_valor = cpf_valor
+        self.controleMedico = controleMedico
+        self.controleConsulta = controleConsulta
+        self.controleProblema = controleProblema
+
         self.consultasagendasmedicos()
 
     # FRAME RESPONŚAVEL PELAS CONSULTAS AGENDADAS MÉDICOS
     def consultasagendasmedicos(self):
+
+        row = self.controleMedico.carregar()
+        id = 0
+        for info in row:
+            if self.cpf_valor == info.cpf:
+                id = info.id
+                break
+
+        consulta = self.controleConsulta.carregar_por_profissional(profissional_id=id)[0]
+        nome = consulta.paciente.nome
+        date_time = consulta.data_horario
+        sintomas = self.controleProblema.pesquisar(id=consulta.paciente.id).sintomas
 
         self.container_agendadas = tkinter.Frame(self.secondary_window, bg=self.sidebar_color)
         self.container_agendadas.place(relx=0.05, rely=0.05, relwidth=0.9, relheight=0.8)
@@ -35,12 +55,12 @@ class JanelaConsultasMedico(JanelaPadrao):
         consultas_agendadas_um.place(relx=0.0, rely=0.0, relwidth=1, relheight=0.15)
 
         # INFORMAÇÕES DENTRO DO SUBFRAME UM
-        label_nome_um = tkinter.Label(consultas_agendadas_um, text="Nome do Paciente: " + 'Rodolfo' + '\t\t\t\t' +
-                                                                 'Horário: ' + '14:30', foreground="black",
+        label_nome_um = tkinter.Label(consultas_agendadas_um, text="Nome do Paciente: " + nome + '\t\t\t\t' +
+                                                                 'Horário: ' + date_time.strftime("%d/%m/%Y %H:%M"), foreground="black",
                                       bg=self.selectionbar_color, font=self.fonte_menor)
         label_nome_um.place(x=5, y=5)
 
-        label_especialidade_um = tkinter.Label(consultas_agendadas_um, text="Sintomas: " + 'Dor de cabeça.',
+        label_especialidade_um = tkinter.Label(consultas_agendadas_um, text="Sintomas: " + sintomas,
                                                foreground="black",
                                                bg=self.selectionbar_color, font=self.fonte_menor)
         label_especialidade_um.place(x=5, y=30)

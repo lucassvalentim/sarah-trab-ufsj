@@ -1,10 +1,11 @@
 from modelo.Consulta import Consulta
 from datetime import datetime
-from persistencia.PersistenciaConsulta import PersistenciaConsulta
+from persistencia.ConsultaDAO import ConsultaDAO
+from modelo.Paciente import Paciente
 
 class ControleConsulta:
 
-    def __init__(self, persistencia:PersistenciaConsulta):
+    def __init__(self, persistencia:ConsultaDAO):
         self.persistencia = persistencia
 
     def modificar(self, id, modificacoes):

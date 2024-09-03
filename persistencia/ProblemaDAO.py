@@ -3,7 +3,7 @@ from modelo.Problema import Problema
 import sqlite3
 
 
-class PersistenciaProblema(Persistencia):
+class ProblemaDAO(Persistencia):
     def __init__(self, db_name):
         super().__init__(db_name)
         create_table_sql = """

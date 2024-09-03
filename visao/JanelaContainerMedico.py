@@ -3,11 +3,11 @@ from tkinter import *
 from visao.JanelaPadrao import JanelaPadrao
 from visao.visaopaciente import Visaopaciente
 from controle.ControlePaciente import ControlePaciente
-from persistencia.PersistenciaPaciente import PersistenciaPaciente
+from persistencia.PacienteDAO import PacienteDAO
 from visao.visaoproblema import Visaoproblema
 from controle.ControleProblema import ControleProblema
-from persistencia.PersistenciaProblema import PersistenciaProblema
-from persistencia.PersistenciaConsulta import PersistenciaConsulta
+from persistencia.ProblemaDAO import ProblemaDAO
+from persistencia.ConsultaDAO import ConsultaDAO
 from controle.ControleConsulta import ControleConsulta
 
 class JanelaContainerMedico(JanelaPadrao):

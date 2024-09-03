@@ -8,7 +8,7 @@ from visao.visaoprofissional import Visaoprofissional
 from visao.JanelaHomeMedico import JanelaHomeMedico
 from visao.visaoprofissional import Visaoprofissional
 from controle.ControleProfissionalSaude import ControleProfissionalSaude
-from persistencia.PersistenciaProfissionalSaude import PersistenciaProfissionalSaude
+from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
 from controle.ControleConsulta import ControleConsulta
 from controle.ControleProblema import ControleProblema
 
