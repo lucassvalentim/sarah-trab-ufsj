@@ -106,7 +106,8 @@ class JanelaRegistro(JanelaPadrao):
             controle=self.controlepaciente,
             controlemedico=self.controlemedico,
             visaoproblema=self.visaoproblema,
-            controleproblema=self.controleproblema
+            controleproblema=self.controleproblema,
+            controleConsulta=self.controleConsulta
         )
 
     def camposProfissional(self):

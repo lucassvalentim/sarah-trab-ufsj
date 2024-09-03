@@ -14,11 +14,12 @@ from persistencia.ProfissionalSaudeDAO import ProfissionalSaudeDAO
 from persistencia.ProblemaDAO import ProblemaDAO
 from controle.ControleProblema import ControleProblema
 from visao.visaoproblema import Visaoproblema
+from controle.ControleConsulta import ControleConsulta
 
 class JanelaRegistroPaciente(JanelaPadrao):
     def __init__(self, master, cpf,  visao: Visaopaciente, controle: ControlePaciente,
                  controlemedico: ControleProfissionalSaude, visaoproblema: Visaoproblema,
-                 controleproblema: ControleProblema):
+                 controleproblema: ControleProblema, controleConsulta:ControleConsulta):
 
         super().__init__(master)
         self.master = master
@@ -27,6 +28,7 @@ class JanelaRegistroPaciente(JanelaPadrao):
         self.controlepaciente = controle
         self.controlemedico = controlemedico
         self.controleproblema = controleproblema
+        self.controleConsulta = controleConsulta
         self.visaoproblema = visaoproblema
 
         # TODO: deixar bonitinho o título(colocar logo)
@@ -140,5 +142,6 @@ class JanelaRegistroPaciente(JanelaPadrao):
             visaoproblema=self.visaoproblema,
             controlePaciente=self.controlepaciente,
             controlemedico=self.controlemedico,
-            controleproblema=self.controleproblema
+            controleproblema=self.controleproblema,
+            controleConsulta=self.controleConsulta
         )
